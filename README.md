@@ -1,9 +1,28 @@
 # TheMovieDb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.4.
+## Summary
 
+This is a PWA implementation of the-movie-db! 
+You can see a live preview [here](http://some-future-bucket-link).
+
+Benefits of this are:
+- works offline
+- fast and app like experience due to the service worker pre-caching everything.
+- can add this to your home screen (on android not sure about ios yet).
+
+## Getting up and Running
+### Terraform - for s3 bucket configuration
+- Run blah
+
+### CircleCI
+- Fork this repo and connect it to your CircleCI account.
+- Create AWS creds (elaborate here).
+
+### AWS S3
+Why s3 you may ask? it's a static website and s3 provides great security (resilience against DDOS) and is super cheap.
+No need to worry about ongoing server costs.
+ 
 ## Development server
-
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
@@ -16,11 +35,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
 
 ## Further help
 
