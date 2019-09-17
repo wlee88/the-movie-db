@@ -2,27 +2,42 @@
 
 ## Summary
 
-This is a PWA implementation of the-movie-db! 
+This is a PWA implementation of the-movie-db!
 You can see a live preview [here](http://some-future-bucket-link).
 
 Benefits of this are:
+
 - works offline
 - fast and app like experience due to the service worker pre-caching everything.
 - can add this to your home screen (on android not sure about ios yet).
 
 ## Getting up and Running
+
 ### Terraform - for s3 bucket configuration
+
 - Run blah
 
 ### CircleCI
+
 - Fork this repo and connect it to your CircleCI account.
+- Add your moviedb API key to build environment.
 - Create AWS creds (elaborate here).
 
 ### AWS S3
+
 Why s3 you may ask? it's a static website and s3 provides great security (resilience against DDOS) and is super cheap.
 No need to worry about ongoing server costs.
- 
+
+# Features
+
+- Named modules
+- linting?
+- (typescript incremental build.. let's see)
+- terraform
+- dockerfile
+
 ## Development server
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
