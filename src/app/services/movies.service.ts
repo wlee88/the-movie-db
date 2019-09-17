@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Movie, Movies, MoviesListResponse } from '../contracts';
+import { Movie, MoviesListResponse } from '../contracts';
 import { objectToQueryParam } from '../utils/object-to-query-param';
 
 // TODO move to injectable app config.
