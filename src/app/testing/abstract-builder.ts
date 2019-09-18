@@ -14,6 +14,7 @@ export abstract class AbstractBuilder<TResult> {
 	constructor(protected readonly result: TResult) {}
 
 	with(valueObjectOrCallback: Partial<TResult> | BuilderCallback<TResult>): this {
+		// Check valueObject is a class.
 		const mutation =
 			typeof valueObjectOrCallback === 'function' ? valueObjectOrCallback(this.result) : valueObjectOrCallback;
 		Object.assign(this.result, mutation);
