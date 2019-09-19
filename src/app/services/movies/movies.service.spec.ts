@@ -2,10 +2,10 @@ import { API_BASE_URL, API_KEY, MoviesService } from './movies.service';
 import { HttpClient } from '@angular/common/http';
 import { IMock, Mock, Times } from 'typemoq';
 import { of } from 'rxjs';
-import { Movie, MoviesListResponse } from '../contracts';
-import { objectToQueryParam } from '../utils/object-to-query-param';
-import { MovieBuilder } from '../testing/builders/movie.builder';
-import { MovieListResponseBuilder } from '../testing/builders/movie-list-response.builder';
+import { Movie, MoviesListResponse } from '../../contracts';
+import { MovieListResponseBuilder } from '../../testing/builders/movie-list-response.builder';
+import { objectToQueryParam } from '../../utils/object-to-query-param';
+import { MovieBuilder } from '../../testing/builders/movie.builder';
 
 describe('MediaService', () => {
 	let sut: MoviesService;

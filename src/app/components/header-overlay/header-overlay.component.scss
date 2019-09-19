@@ -1,11 +1,20 @@
 @import 'src/app/scss/_colors.scss';
+@import 'src/app/scss/_variables.scss';
+
+$headerOverlayImageUrl: url('/assets/most-popular-page-header.jpg');
+$headerOverlayHeight: 200px;
+
+$backButtonTop: 30px;
+$backButtonLeft: 30px;
+
+$backButtonIconFontSize: 1.5rem;
 
 .header {
-	background-image: url('/assets/most-popular-page-header.jpg');
+	background-image: $headerOverlayImageUrl;
 	background-position: center;
 	background-repeat: no-repeat no-repeat;
 	background-size: cover;
-	height: 220px;
+	height: $headerOverlayHeight;
 	width: 100%;
 
 	&__container {
@@ -20,11 +29,11 @@
 
 	&__back-button {
 		position: absolute;
-		top: 30px;
-		left: 30px;
+		top: $backButtonTop;
+		left: $backButtonLeft;
 
 		&-icon {
-			font-size: 1.5rem;
+			font-size: $backButtonIconFontSize;
 			color: $white;
 		}
 	}

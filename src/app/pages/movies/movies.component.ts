@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Movies } from '../../contracts';
-import { merge, Observable, of, Subject } from 'rxjs';
-import { filter, flatMap, map, take } from 'rxjs/operators';
+import { merge, Observable, Subject } from 'rxjs';
+import { filter, flatMap, map } from 'rxjs/operators';
 import { SearchBarForm } from '../../contracts/search-bar-form';
-import { MoviesService } from '../../services/movies/movies.service';
-import { StoreService } from '../../services/store/store.service';
+import { MoviesService, StoreService } from '../../services';
 
 @Component({
-	selector: 'app-popular-movies',
-	templateUrl: './popular-movies.component.html',
-	styleUrls: ['./popular-movies.component.scss']
+	selector: 'movies',
+	templateUrl: './movies.component.html',
+	styleUrls: ['./movies.component.scss']
 })
-export class PopularMoviesComponent implements OnInit {
+export class MoviesComponent implements OnInit {
 	currentSearchTerm: string;
-	popularMovies$: Observable<Movies> = of();
-	searchedMovies$: Observable<Movies> = of();
 	movies$: Observable<Movies>;
-	searchSubject$: Subject<string> = new Subject<string>();
 	refreshSubject$: Subject<void> = new Subject<void>();
-	store$: Observable<string>;
+	storedSearchValue$: Observable<string>;
 
 	constructor(private readonly moviesService: MoviesService, private readonly storeService: StoreService) {
-		this.store$ = this.storeService.getObservable();
+		this.storedSearchValue$ = this.storeService.getObservable();
 	}
 
 	ngOnInit() {
+		/**
+		 * Needs refining, as still will get most popular movies when getting a stored search value.
+		 * Luckily the movies service caches results so no extra network call is needed
+		 */
 		this.movies$ = merge(
 			this.refreshSubject$.pipe(flatMap(_ => this.getMostPopularMovies())),
 			this.getMostPopularMovies(),
-			this.store$.pipe(
+			this.storedSearchValue$.pipe(
 				filter(value => !!value),
 				flatMap(searchText =>
 					this.moviesService.searchMovies(searchText).pipe(map(moviesListResponse => moviesListResponse.results))

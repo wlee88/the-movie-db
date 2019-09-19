@@ -4,8 +4,8 @@ import { Location } from '@angular/common';
 import { Movie } from '../../contracts';
 import { Observable } from 'rxjs';
 import { resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
-import { MoviesService } from '../../services/movies/movies.service';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { MoviesService } from '../../services';
 
 @Component({
 	selector: 'app-movie-detail',
