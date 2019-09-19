@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Movies } from '../../contracts';
 import { merge, Observable, of, Subject } from 'rxjs';
-import { flatMap, map, take } from 'rxjs/operators';
+import { filter, flatMap, map, take } from 'rxjs/operators';
 import { SearchBarForm } from '../../contracts/search-bar-form';
 import { MoviesService } from '../../services/movies/movies.service';
 import { StoreService } from '../../services/store/store.service';
@@ -28,12 +28,10 @@ export class PopularMoviesComponent implements OnInit {
 		this.movies$ = merge(
 			this.refreshSubject$.pipe(flatMap(_ => this.getMostPopularMovies())),
 			this.getMostPopularMovies(),
-			this.searchSubject$.pipe(
+			this.store$.pipe(
+				filter(value => !!value),
 				flatMap(searchText =>
-					this.moviesService.searchMovies(searchText).pipe(
-						map(moviesListResponse => moviesListResponse.results),
-						take(1)
-					)
+					this.moviesService.searchMovies(searchText).pipe(map(moviesListResponse => moviesListResponse.results))
 				)
 			)
 		);
@@ -42,7 +40,8 @@ export class PopularMoviesComponent implements OnInit {
 	get heading(): string {
 		const POPULAR_MOVIES = 'Popular Movies';
 		const RESULTS = 'Results';
-		return this.currentSearchTerm ? RESULTS : POPULAR_MOVIES;
+
+		return this.storeService.getValue() ? RESULTS : POPULAR_MOVIES;
 	}
 
 	/**
@@ -52,9 +51,9 @@ export class PopularMoviesComponent implements OnInit {
 	searchAndUpdateMovies(searchBarFormChange: SearchBarForm) {
 		const { searchText } = searchBarFormChange;
 		this.currentSearchTerm = searchText;
-		if (searchText) {
-			this.searchSubject$.next(searchText);
-		} else {
+		this.storeService.setValue(searchText);
+
+		if (!searchText) {
 			this.refreshSubject$.next();
 		}
 	}

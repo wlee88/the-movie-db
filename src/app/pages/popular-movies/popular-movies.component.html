@@ -1,14 +1,18 @@
-<header></header>
+<header-overlay></header-overlay>
 <div class="container popular-movies__container">
-	<search-bar (formChange)="searchAndUpdateMovies($event)"></search-bar>
+	<search-bar [text]="store$ | async" (formChange)="searchAndUpdateMovies($event)"></search-bar>
 
 	<section class="popular-movies__heading">
 		<h2>{{ heading }}</h2>
 	</section>
 
-	<div class="popular-movies__items row">
-		<article class="col-md-3 col-6" *ngFor="let movie of movies$ | async">
-			<movie-item [movie]="movie" [routerLink]="[movie.id]"> </movie-item>
+	<div class="popular-movies__items row" *ngIf="movies$ | async as movies; else loading">
+		<article class="col-md-3 col-6" *ngFor="let movie of movies">
+			<movie-item [movie]="movie" [routerLink]="[movie.id]"></movie-item>
 		</article>
 	</div>
 </div>
+
+<ng-template #loading>
+	<loading></loading>
+</ng-template>

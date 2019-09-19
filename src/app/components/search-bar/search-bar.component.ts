@@ -13,6 +13,8 @@ const DEFAULT_DELAY_EMIT_IN_MS = 500;
 	styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements AfterViewInit, OnDestroy {
+	@Input() text = '';
+	@Input() placeholder = 'Search';
 	@Input() delayEmitInMs = DEFAULT_DELAY_EMIT_IN_MS;
 	@Output() formChange = new EventEmitter<SearchBarForm>();
 	@ViewChild('searchInput', { static: false }) searchInput: NgModel;

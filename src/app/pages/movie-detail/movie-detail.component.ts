@@ -5,6 +5,7 @@ import { Movie } from '../../contracts';
 import { Observable } from 'rxjs';
 import { resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
 import { MoviesService } from '../../services/movies/movies.service';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'app-movie-detail',
@@ -12,6 +13,7 @@ import { MoviesService } from '../../services/movies/movies.service';
 	styleUrls: ['./movie-detail.component.scss']
 })
 export class MovieDetailComponent implements OnInit {
+	faSpinner = faSpinner;
 	movie$: Observable<Movie>;
 	constructor(
 		private readonly location: Location,

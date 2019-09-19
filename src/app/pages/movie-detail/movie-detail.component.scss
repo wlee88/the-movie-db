@@ -1,13 +1,16 @@
 @import 'src/app/scss/_colors.scss';
+@import 'src/app/scss/_variables.scss';
 
+$movieDetailOverviewPadding: 30px;
+$interpunctMargin: 0 5px;
 .movie-detail {
 	&__image {
 		display: inline-block;
 		position: relative;
-		top: -50px;
+		top: -30px;
 
 		img {
-			box-shadow: 5px 5px 5px black;
+			box-shadow: $boxShadow;
 			border-radius: 8px;
 		}
 	}
@@ -17,11 +20,11 @@
 	}
 
 	&__overview {
-		padding: 30px;
+		padding: $movieDetailOverviewPadding;
 	}
 
 	&__interpunct {
-		margin: 0 5px;
+		margin: $interpunctMargin;
 	}
 
 	&__title-with-description {

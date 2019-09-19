@@ -1,4 +1,5 @@
 @import 'src/app/scss/_colors.scss';
+@import 'src/app/scss/_variables.scss';
 
 $movieItemMarginBottom: 20px;
 $badgePositionTop: 0;
@@ -14,7 +15,7 @@ $movieItemSummaryPaddingTopBottom: 15px;
 		img {
 			width: 100%;
 			border-radius: 10px;
-			box-shadow: 5px 5px 5px black;
+			box-shadow: $boxShadow;
 		}
 	}
 
@@ -26,14 +27,15 @@ $movieItemSummaryPaddingTopBottom: 15px;
 
 	&__summary {
 		margin: $movieItemSummaryPaddingTopBottom 0;
-	}
 
-	&__title {
-		font-size: 0.9rem;
-	}
+		&-title {
+			font-size: 0.9rem;
+			color: $subTitleColor;
+		}
 
-	&__release-date {
-		font-size: 0.8rem;
-		color: $subtextColor;
+		&-release-date {
+			font-size: 0.8rem;
+			color: $subtextColor;
+		}
 	}
 }

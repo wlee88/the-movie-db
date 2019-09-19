@@ -4,10 +4,11 @@
 			#searchInput
 			type="text"
 			class="search-input"
-			placeholder="Search"
+			[placeholder]="placeholder"
 			formControlName="searchText"
 			maxlength="100"
 			aria-label="search-input"
+			[value]="text"
 		/>
 		<fa-icon [icon]="faSearch" aria-label="search-box-placeholder"></fa-icon>
 	</form>

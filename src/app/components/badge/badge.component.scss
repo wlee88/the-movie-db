@@ -2,8 +2,9 @@
 
 .badge {
 	background-color: grey;
-	padding: 3px 10px;
+	padding: 5px 12px;
 	border-radius: 8px;
+	color: $white;
 
 	&--high {
 		background-color: $primary;

@@ -1,4 +1,5 @@
-@import 'src/app/scss/colors.scss';
+@import 'src/app/scss/_colors.scss';
+@import 'src/app/scss/_variables.scss';
 
 $searchInputHeight: 40px;
 $searchInputWidth: 100%;
@@ -8,7 +9,7 @@ $searchInputWidthOffset: 20px;
 .search-bar {
 	color: $primary;
 	background-color: $white;
-	box-shadow: 10px 5px 5px black;
+	box-shadow: $boxShadow;
 	border-radius: 20px;
 	width: $searchInputWidth;
 	height: $searchInputHeight;

@@ -7,7 +7,7 @@
 body {
 	font-family: $primaryFont;
 	background: $backgroundColor;
-	color: $white;
+	color: $fontColor;
 }
 
 h1,
@@ -17,6 +17,7 @@ h4,
 h5,
 h6 {
 	font-family: $secondaryFont;
+	color: $headingColor;
 }
 
 hr {

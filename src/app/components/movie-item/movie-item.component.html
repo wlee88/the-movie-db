@@ -4,9 +4,9 @@
 		<badge [voteAverage]="movie.vote_average"></badge>
 	</div>
 	<div class="movie-item__summary">
-		<div class="movie-item__title">
+		<div class="movie-item__summary-title">
 			{{ movie.title }}
 		</div>
-		<div class="movie-item__release-date">{{ movie.release_date | date: 'MMMM yyyy' }}</div>
+		<div class="movie-item__summary-release-date">{{ movie.release_date | date: 'MMMM yyyy' }}</div>
 	</div>
 </article>
