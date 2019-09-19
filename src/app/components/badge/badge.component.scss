@@ -1,0 +1,19 @@
+@import 'src/app/scss/_colors.scss';
+
+.badge {
+	background-color: grey;
+	padding: 3px 10px;
+	border-radius: 8px;
+
+	&--high {
+		background-color: $primary;
+	}
+
+	&--average {
+		background-color: $warning;
+	}
+
+	&--low {
+		background-color: $danger;
+	}
+}

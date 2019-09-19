@@ -1,0 +1,31 @@
+@import 'src/app/scss/colors.scss';
+
+$searchInputHeight: 40px;
+$searchInputWidth: 100%;
+$searchInputTop: 7px;
+$searchInputWidthOffset: 20px;
+
+.search-bar {
+	color: $primary;
+	background-color: $white;
+	box-shadow: 10px 5px 5px black;
+	border-radius: 20px;
+	width: $searchInputWidth;
+	height: $searchInputHeight;
+	position: relative;
+}
+.search-input {
+	position: absolute;
+	left: $searchInputWidthOffset;
+	top: $searchInputTop;
+	border: none;
+	width: 90%;
+	color: $primary;
+}
+
+fa-icon {
+	position: absolute;
+	right: $searchInputWidthOffset;
+	top: $searchInputTop;
+	color: $primary;
+}

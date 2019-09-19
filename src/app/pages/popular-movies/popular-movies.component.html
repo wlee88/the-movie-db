@@ -1,4 +1,14 @@
 <header></header>
-<search-bar></search-bar>
-<movie-item></movie-item>
-<p>popular-movies works!</p>
+<div class="container popular-movies__container">
+	<search-bar (formChange)="searchAndUpdateMovies($event)"></search-bar>
+
+	<section class="popular-movies__heading">
+		<h2>Popular Movies</h2>
+	</section>
+
+	<div class="popular-movies__items row">
+		<article class="col-md-3 col-6" *ngFor="let movie of popularMovies$ | async">
+			<movie-item [movie]="movie"> </movie-item>
+		</article>
+	</div>
+</div>

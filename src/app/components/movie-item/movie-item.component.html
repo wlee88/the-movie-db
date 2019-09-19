@@ -1,1 +1,16 @@
-<p>movie-item works!</p>
+<article class="movie-item">
+	<div class="movie-item__image">
+		<div class="the-image">
+			<img src="{{ fullImagePath }}" />
+		</div>
+		<div class="the-badge">
+			<badge [voteAverage]="movie.vote_average"></badge>
+		</div>
+	</div>
+	<div class="movie-item__summary">
+		<div class="movie-item__title">
+			{{ movie.title }}
+		</div>
+		<div class="movie-item__release-date">{{ movie.release_date }}</div>
+	</div>
+</article>

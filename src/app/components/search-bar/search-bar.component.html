@@ -1,1 +1,14 @@
-<p>search-bar works!</p>
+<section class="search-bar">
+	<form [formGroup]="form">
+		<input
+			#searchInput
+			type="text"
+			class="search-input"
+			placeholder="Search"
+			formControlName="searchText"
+			maxlength="100"
+			aria-label="search-input"
+		/>
+		<fa-icon [icon]="faSearch" class="search-box-placeholder"></fa-icon>
+	</form>
+</section>

@@ -1,0 +1,20 @@
+$movieItemMarginBottom: 20px;
+$badgePositionTop: 0;
+$badgePositionLeft: 4px;
+.movie-item {
+	margin-bottom: $movieItemMarginBottom;
+	cursor: pointer;
+	position: relative;
+	min-height: 300px;
+	&__image {
+		img {
+			width: 100%;
+		}
+	}
+
+	badge {
+		position: absolute;
+		top: $badgePositionTop;
+		left: $badgePositionLeft;
+	}
+}

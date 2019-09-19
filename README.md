@@ -11,6 +11,12 @@ Benefits of this are:
 - fast and app like experience due to the service worker pre-caching everything.
 - can add this to your home screen (on android not sure about ios yet).
 
+## Folder structure
+
+- Components
+- Contracts
+- Pages
+
 ## Getting up and Running
 
 ### Terraform - for s3 bucket configuration
