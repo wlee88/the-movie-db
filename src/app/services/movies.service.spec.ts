@@ -87,7 +87,7 @@ describe('MediaService', () => {
 			const expectedParameters = {
 				page: 1,
 				query: 'iron man',
-				apiKey: API_KEY
+				api_key: API_KEY
 			};
 
 			mockMovieListResponse = new MovieListResponseBuilder().build();

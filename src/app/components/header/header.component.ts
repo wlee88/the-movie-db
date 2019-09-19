@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'header',
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-	constructor() {}
+export class HeaderComponent {
+	@Input() shouldShowBackButton = false;
+	@Output() backButtonSelected = new EventEmitter<boolean>();
+	faArrowLeft = faArrowLeft;
 
-	ngOnInit() {}
+	emitBackButtonSelected() {
+		this.backButtonSelected.emit(true);
+	}
 }

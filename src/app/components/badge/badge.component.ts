@@ -28,8 +28,4 @@ export class BadgeComponent {
 		}
 		return '';
 	}
-
-	get scoreAsPercentage(): string {
-		return `${Number(this.voteAverage) * 10}%`;
-	}
 }

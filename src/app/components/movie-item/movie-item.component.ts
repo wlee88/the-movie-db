@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from '../../contracts';
+import { resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
 
-const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w500/';
 @Component({
 	selector: 'movie-item',
 	templateUrl: './movie-item.component.html',
@@ -14,7 +14,7 @@ export class MovieItemComponent implements OnInit {
 
 	ngOnInit() {}
 
-	get fullImagePath() {
-		return `${BASE_IMAGE_URL}${this.movie.poster_path}`;
+	get resolveFullImagePath() {
+		return resolveFullImagePath(this.movie.poster_path);
 	}
 }

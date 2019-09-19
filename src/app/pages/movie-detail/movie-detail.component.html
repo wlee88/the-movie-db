@@ -1,0 +1,27 @@
+<section class="movie-detail" *ngIf="movie$ | async as movie">
+	<header [shouldShowBackButton]="true" (backButtonSelected)="backButtonSelected()"></header>
+	<div class="container">
+		<div class="row movie-detail__heading-summary">
+			<div class="col-5 movie-detail--image">
+				<img [src]="resolveFullImagePath(movie.poster_path)" class="w-100 h-100" />
+			</div>
+			<div class="col-7">
+				<div class="title">
+					<h2>{{ movie.title }}</h2>
+				</div>
+				<div class="movie-detail__year-with-user-score">
+					<span class="movie-detail__year">{{ movie.release_date | date: 'yyyy' }}</span>
+					<span class="movie-detail__interpunct">·</span>
+					<span class="movie-detail__user-score">{{ movie.vote_average | scoreAsPercentage }}</span>
+				</div>
+				<div class="duration">
+					{{ movie.runtime | durationToHours }}
+				</div>
+			</div>
+		</div>
+		<article class="movie-detail__overview">
+			<h4>Overview</h4>
+			<p>{{ movie.overview }}</p>
+		</article>
+	</div>
+</section>

@@ -1,3 +1,11 @@
 <section class="header header__container">
 	<img src="assets/the-movie-db-icon.svg" alt="Icon of the movie db" class="icon" />
+	<button
+		class="btn header__back-button"
+		aria-label="back-button"
+		*ngIf="shouldShowBackButton"
+		(click)="emitBackButtonSelected()"
+	>
+		<fa-icon [icon]="faArrowLeft" class="header__back-button-icon"></fa-icon>
+	</button>
 </section>

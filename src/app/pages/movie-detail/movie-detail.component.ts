@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Movie } from '../../contracts';
+import { MoviesService } from '../../services/movies.service';
+import { Observable } from 'rxjs';
+import { resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
 
 @Component({
 	selector: 'app-movie-detail',
@@ -6,7 +12,23 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./movie-detail.component.scss']
 })
 export class MovieDetailComponent implements OnInit {
-	constructor() {}
+	movie$: Observable<Movie>;
+	constructor(
+		private readonly location: Location,
+		private readonly route: ActivatedRoute,
+		private readonly moviesService: MoviesService
+	) {}
 
-	ngOnInit() {}
+	ngOnInit(): void {
+		const movieId = this.route.snapshot.params.id;
+		this.movie$ = this.moviesService.getMovie(movieId);
+	}
+
+	resolveFullImagePath(movieImageUrl: string): string {
+		return resolveFullImagePath(movieImageUrl);
+	}
+
+	backButtonSelected() {
+		this.location.back();
+	}
 }
