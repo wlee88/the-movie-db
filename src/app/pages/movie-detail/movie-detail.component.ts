@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Movie } from '../../contracts';
-import { MoviesService } from '../../services/movies.service';
 import { Observable } from 'rxjs';
 import { resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
+import { MoviesService } from '../../services/movies/movies.service';
 
 @Component({
 	selector: 'app-movie-detail',

@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DurationToHoursPipe } from './pipes/duration-to-hours/duration-to-hours.pipe';
 import { ScoreAsPercentagePipe } from './pipes/score-as-percentage/score-as-percentage.pipe';
+import { MoviesService } from './services/movies/movies.service';
+import { StoreService } from './services/store/store.service';
 
 const PAGES = [PopularMoviesComponent, MovieDetailComponent, NotFoundComponent];
 const APP_COMPONENTS = [AppComponent, HeaderComponent];
@@ -30,7 +32,7 @@ const APP_COMPONENTS = [AppComponent, HeaderComponent];
 		ScoreAsPercentagePipe
 	],
 	imports: [BrowserModule, AppRoutingModule, HttpClientModule, FontAwesomeModule, ReactiveFormsModule],
-	providers: [],
+	providers: [MoviesService, StoreService],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

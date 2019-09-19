@@ -31,11 +31,8 @@ input {
 	::placeholder {
 		color: $primary;
 	}
-	&:focus {
-		outline: none;
-	}
 }
 
-input:focus {
+*:focus {
 	outline: none;
 }

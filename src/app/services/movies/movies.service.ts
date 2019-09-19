@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Movie, MoviesListResponse } from '../contracts';
-import { objectToQueryParam } from '../utils/object-to-query-param';
-import { distinctUntilChanged, shareReplay } from 'rxjs/operators';
+import { distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
+import { Movie, MoviesListResponse } from '../../contracts';
+import { objectToQueryParam } from '../../utils/object-to-query-param';
 
 // TODO move to injectable app config.
 export const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -23,7 +23,10 @@ export class MoviesService {
 	 * @param id - of the movie.
 	 */
 	getMovie(id: number): Observable<Movie> {
-		return this.http.get<Movie>(`${this.baseUrl}/movie/${id}?api_key=${this.apiKey}`);
+		return this.http.get<Movie>(`${this.baseUrl}/movie/${id}?api_key=${this.apiKey}`).pipe(
+			take(1),
+			shareReplay(1)
+		);
 	}
 
 	/**
@@ -43,6 +46,7 @@ export class MoviesService {
 			.get<MoviesListResponse>(`${this.baseUrl}/discover/movie?${objectToQueryParam(queryParameters)}`)
 			.pipe(
 				distinctUntilChanged(),
+				take(1),
 				shareReplay(1)
 			);
 	}
@@ -59,6 +63,12 @@ export class MoviesService {
 			query: searchTerm,
 			api_key: API_KEY
 		};
-		return this.http.get<MoviesListResponse>(`${this.baseUrl}/search/movie?${objectToQueryParam(queryParameters)}`);
+		return this.http
+			.get<MoviesListResponse>(`${this.baseUrl}/search/movie?${objectToQueryParam(queryParameters)}`)
+			.pipe(
+				distinctUntilChanged(),
+				take(1),
+				shareReplay(1)
+			);
 	}
 }

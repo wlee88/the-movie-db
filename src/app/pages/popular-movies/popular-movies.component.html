@@ -3,11 +3,11 @@
 	<search-bar (formChange)="searchAndUpdateMovies($event)"></search-bar>
 
 	<section class="popular-movies__heading">
-		<h2>Popular Movies</h2>
+		<h2>{{ heading }}</h2>
 	</section>
 
 	<div class="popular-movies__items row">
-		<article class="col-md-3 col-6" *ngFor="let movie of popularMovies$ | async">
+		<article class="col-md-3 col-6" *ngFor="let movie of movies$ | async">
 			<movie-item [movie]="movie" [routerLink]="[movie.id]"> </movie-item>
 		</article>
 	</div>

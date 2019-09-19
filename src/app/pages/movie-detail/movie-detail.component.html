@@ -1,11 +1,15 @@
 <section class="movie-detail" *ngIf="movie$ | async as movie">
-	<header [shouldShowBackButton]="true" (backButtonSelected)="backButtonSelected()"></header>
+	<header
+		[shouldShowBackButton]="true"
+		(backButtonSelected)="backButtonSelected()"
+		[overrideBackgroundImageUrlWith]="resolveFullImagePath(movie.backdrop_path)"
+	></header>
 	<div class="container">
 		<div class="row movie-detail__heading-summary">
-			<div class="col-5 movie-detail--image">
+			<div class="col-5 col-lg-2 movie-detail__image">
 				<img [src]="resolveFullImagePath(movie.poster_path)" class="w-100 h-100" />
 			</div>
-			<div class="col-7">
+			<div class="col-7 col-lg-10 movie-detail__title-with-description">
 				<div class="title">
 					<h2>{{ movie.title }}</h2>
 				</div>

@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { SearchBarForm } from '../../contracts/search-bar-form';
 
-const DEFAULT_DELAY_EMIT_IN_MS = 200;
+const DEFAULT_DELAY_EMIT_IN_MS = 500;
 
 @Component({
 	selector: 'search-bar',

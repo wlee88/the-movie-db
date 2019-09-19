@@ -1,14 +1,18 @@
 @import 'src/app/scss/_colors.scss';
 
 .movie-detail {
-	&--image {
+	&__image {
 		display: inline-block;
 		position: relative;
 		top: -50px;
+
+		img {
+			box-shadow: 5px 5px 5px black;
+			border-radius: 8px;
+		}
 	}
 
 	&__heading-summary {
-		padding: 30px;
 		border-bottom: 1px solid $horizontalRuleColor;
 	}
 
@@ -18,5 +22,9 @@
 
 	&__interpunct {
 		margin: 0 5px;
+	}
+
+	&__title-with-description {
+		padding: 30px;
 	}
 }
