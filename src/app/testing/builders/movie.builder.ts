@@ -20,7 +20,7 @@ export class MovieBuilder extends AbstractBuilder<Movie> {
 			adult: true,
 			runtime: randomNumber(),
 			overview: uuid(),
-			release_date: uuid()
+			release_date: new Date().toString()
 		});
 	}
 }

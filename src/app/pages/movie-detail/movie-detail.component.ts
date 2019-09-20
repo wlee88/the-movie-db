@@ -1,15 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Movie } from '../../contracts';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
 	IMAGE_LOADING_PLACEHOLDER_URL,
 	IMAGE_MISSING_PLACEHOLDER_URL,
 	ImageQuality,
 	resolveFullImagePath
 } from '../../utils/resolve-full-image-path/resolve-full-image-path';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MoviesService } from '../../services';
 import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 
@@ -19,11 +18,11 @@ import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 	styleUrls: ['./movie-detail.component.scss']
 })
 export class MovieDetailComponent implements OnInit {
-	faSpinner = faSpinner;
 	movie$: Observable<Movie>;
 
 	sizes: Breakpoint[] = [{ size: 'xs', width: 0 }, { size: 'md', width: 768 }, { size: 'lg', width: 992 }];
 	image: ResponsiveImage;
+	originalImageQuality = ImageQuality.ORIGINAL;
 
 	constructor(
 		private readonly location: Location,

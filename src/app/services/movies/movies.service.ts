@@ -48,7 +48,6 @@ export class MoviesService {
 		return this.http
 			.get<MoviesListResponse>(`${this.baseUrl}/discover/movie?${objectToQueryParam(queryParameters)}`)
 			.pipe(
-				distinctUntilChanged(),
 				take(1),
 				shareReplay(1)
 			);
@@ -68,7 +67,6 @@ export class MoviesService {
 		return this.http
 			.get<MoviesListResponse>(`${this.baseUrl}/search/movie?${objectToQueryParam(queryParameters)}`)
 			.pipe(
-				distinctUntilChanged(),
 				take(1),
 				shareReplay(1)
 			);

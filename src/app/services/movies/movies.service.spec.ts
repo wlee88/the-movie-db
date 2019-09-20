@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_KEY, MoviesService } from './movies.service';
+import { MoviesService } from './movies.service';
 import { HttpClient } from '@angular/common/http';
 import { IMock, Mock, Times } from 'typemoq';
 import { of } from 'rxjs';
@@ -6,18 +6,29 @@ import { Movie, MoviesListResponse } from '../../contracts';
 import { MovieListResponseBuilder } from '../../testing/builders/movie-list-response.builder';
 import { objectToQueryParam } from '../../utils/object-to-query-param';
 import { MovieBuilder } from '../../testing/builders/movie.builder';
+import { ConfigurationService } from '../configuration/configuration.service';
+import * as uuid from 'uuid';
 
-describe('MediaService', () => {
+describe('MoviesService', () => {
 	let sut: MoviesService;
 	let http: IMock<HttpClient>;
+	let configurationService: IMock<ConfigurationService>;
+	let apiUrl: string;
 
 	beforeEach(() => {
+		apiUrl = uuid();
 		http = Mock.ofType<HttpClient>();
-		sut = new MoviesService(http.object);
+		configurationService = Mock.ofType<ConfigurationService>();
+		configurationService
+			.setup(x => x.apiUrl())
+			.returns(() => apiUrl)
+			.verifiable(Times.once());
+		sut = new MoviesService(http.object, configurationService.object);
 	});
 
 	afterEach(() => {
 		http.reset();
+		configurationService.reset();
 	});
 
 	describe('when fetching a movie via its id', () => {
@@ -26,7 +37,7 @@ describe('MediaService', () => {
 
 		beforeEach(() => {
 			movie = new MovieBuilder().build();
-			const expectedUrl = `${API_BASE_URL}/movie/${movie.id}?api_key=${API_KEY}`;
+			const expectedUrl = `${apiUrl}/movie/${movie.id}`;
 			http
 				.setup(x => x.get<Movie>(expectedUrl))
 				.returns(() => of(movie))
@@ -34,8 +45,9 @@ describe('MediaService', () => {
 			sut.getMovie(movie.id).subscribe(response => (actual = response));
 		});
 
-		it('should call the http client with the right parameters', () => {
+		it('should call the service', () => {
 			http.verifyAll();
+			configurationService.verifyAll();
 		});
 
 		it('should return the right data', () => {
@@ -51,10 +63,9 @@ describe('MediaService', () => {
 			beforeEach(() => {
 				const defaultParameters = {
 					page: 1,
-					sort_by: 'popularity.desc',
-					api_key: API_KEY
+					sort_by: 'popularity.desc'
 				};
-				const expectedUrl = `${API_BASE_URL}/discover/movie?${objectToQueryParam(defaultParameters)}`;
+				const expectedUrl = `${apiUrl}/discover/movie?${objectToQueryParam(defaultParameters)}`;
 				mockMovieListResponse = {
 					page: 1,
 					results: [new MovieBuilder().build()],
@@ -71,6 +82,7 @@ describe('MediaService', () => {
 
 			it('should call the http client with the expected defaults', () => {
 				http.verifyAll();
+				configurationService.verifyAll();
 			});
 
 			it('should return the right data', () => {
@@ -86,12 +98,11 @@ describe('MediaService', () => {
 		beforeEach(() => {
 			const expectedParameters = {
 				page: 1,
-				query: 'iron man',
-				api_key: API_KEY
+				query: uuid()
 			};
 
 			mockMovieListResponse = new MovieListResponseBuilder().build();
-			const expectedUrl = `${API_BASE_URL}/search/movie?${objectToQueryParam(expectedParameters)}`;
+			const expectedUrl = `${apiUrl}/search/movie?${objectToQueryParam(expectedParameters)}`;
 			http
 				.setup(x => x.get<MoviesListResponse>(expectedUrl))
 				.returns(() => of(mockMovieListResponse))

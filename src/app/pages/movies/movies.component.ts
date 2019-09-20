@@ -22,8 +22,9 @@ export class MoviesComponent implements OnInit {
 
 	ngOnInit() {
 		/**
-		 * Needs refining, as still will get most popular movies when getting a stored search value.
-		 * Luckily the movies service caches results so no extra network call is needed
+		 * Needs refining, as still will get most popular movies when there exists a stored search value.
+		 * Luckily the movies service caches results so no extra network call is needed.
+		 * It shows the results from store (if there is a value) because this is the last observable emitted
 		 */
 		this.movies$ = merge(
 			this.refreshSubject$.pipe(flatMap(_ => this.getMostPopularMovies())),
@@ -53,6 +54,7 @@ export class MoviesComponent implements OnInit {
 		this.currentSearchTerm = searchText;
 		this.storeService.setValue(searchText);
 
+		// The search term is empty so show the list of popular movies.
 		if (!searchText) {
 			this.refreshSubject$.next();
 		}

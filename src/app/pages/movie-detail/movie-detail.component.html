@@ -2,7 +2,7 @@
 	<header-overlay
 		[shouldShowBackButton]="true"
 		(backButtonSelected)="backButtonSelected()"
-		[overrideBackgroundImageUrlWith]="resolveFullImagePath(movie.backdrop_path, 'original')"
+		[overrideBackgroundImageUrlWith]="resolveFullImagePath(movie.backdrop_path, originalImageQuality)"
 	></header-overlay>
 	<div class="container">
 		<div class="row movie-detail__heading-summary">
@@ -15,7 +15,7 @@
 				></sn-image-loader>
 			</div>
 			<div class="col-7 col-lg-10 movie-detail__title-with-description">
-				<div class="title">
+				<div class="movie-detail__title">
 					<h1>{{ movie.title }}</h1>
 				</div>
 				<div class="movie-detail__year-with-user-score">
@@ -23,7 +23,7 @@
 					<span class="movie-detail__interpunct">·</span>
 					<span class="movie-detail__user-score">{{ movie.vote_average | scoreAsPercentage }} User Score</span>
 				</div>
-				<div class="duration">
+				<div class="movie-detail__duration">
 					{{ movie.runtime | durationToHours }}
 				</div>
 			</div>

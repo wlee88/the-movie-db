@@ -37,6 +37,8 @@ Benefits of this are:
 - Contracts
 - Pages
 
+SCSS style tries to use [BEM - Block Element Modifier](http://getbem.com).
+
 ## Getting up and Running
 
 ### Terraform - for s3 bucket configuration
