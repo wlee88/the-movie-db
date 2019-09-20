@@ -42,6 +42,10 @@ yarn.lock
 testem.log
 /typings
 
+# env specific
+.env
+environment.ts
+
 # System Files
 .DS_Store
 Thumbs.db

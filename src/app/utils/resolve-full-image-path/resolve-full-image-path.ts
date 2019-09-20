@@ -1,4 +1,4 @@
-const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w500/';
+const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w200/';
 export function resolveFullImagePath(movieImagePath: string) {
 	return `${BASE_IMAGE_URL}${movieImagePath}`;
 }

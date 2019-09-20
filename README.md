@@ -1,8 +1,17 @@
 # TheMovieDb
 
+## Initial Environment Setup
+
+`.env`
+
+- create a `.env` file at root with `API_KEY` and `API_URL`. It should look like this:
+
+```
+API_URL: {{the-movie-db-api-
+```
+
 ## Summary
 
-This is a PWA implementation of the-movie-db!
 You can see a live preview [here](http://some-future-bucket-link).
 
 Benefits of this are:

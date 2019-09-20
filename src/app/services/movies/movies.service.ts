@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
 import { Movie, MoviesListResponse } from '../../contracts';
 import { objectToQueryParam } from '../../utils/object-to-query-param';
+import { ConfigurationService } from '../configuration/configuration.service';
 
 // TODO move to injectable app config.
 export const API_BASE_URL = 'https://api.themoviedb.org/3';
@@ -13,10 +14,13 @@ export const API_KEY = '6ed12e064b90ae1290fa326ce9e790ff';
 	providedIn: 'root'
 })
 export class MoviesService {
-	private readonly apiKey = API_KEY;
-	private readonly baseUrl = API_BASE_URL;
+	private readonly apiKey;
+	private readonly baseUrl;
 
-	constructor(private http: HttpClient) {}
+	constructor(private readonly http: HttpClient, private readonly configurationService: ConfigurationService) {
+		this.apiKey = this.configurationService.apiKey();
+		this.baseUrl = this.configurationService.apiUrl();
+	}
 
 	/**
 	 * Given a movie id, return it's details from the-movie-db API.
@@ -41,7 +45,6 @@ export class MoviesService {
 			api_key: API_KEY
 		};
 
-		// TODO: api_key to intercepter and append.
 		return this.http
 			.get<MoviesListResponse>(`${this.baseUrl}/discover/movie?${objectToQueryParam(queryParameters)}`)
 			.pipe(
