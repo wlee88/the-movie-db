@@ -18,7 +18,7 @@ export class MoviesService {
 
 	constructor(private readonly http: HttpClient, private readonly configurationService: ConfigurationService) {
 		this.apiKey = this.configurationService.apiKey();
-		this.baseUrl = this.configurationService.apiUrl();
+		this.baseUrl = this.addTrailingSlash(this.configurationService.apiUrl());
 	}
 
 	/**
@@ -27,7 +27,7 @@ export class MoviesService {
 	 * @param id - of the movie.
 	 */
 	getMovie(id: number): Observable<Movie> {
-		return this.http.get<Movie>(`${this.baseUrl}/movie/${id}`).pipe(
+		return this.http.get<Movie>(`${this.baseUrl}movie/${id}`).pipe(
 			take(1),
 			shareReplay(1)
 		);
@@ -46,7 +46,7 @@ export class MoviesService {
 		};
 
 		return this.http
-			.get<MoviesListResponse>(`${this.baseUrl}/discover/movie?${objectToQueryParam(queryParameters)}`)
+			.get<MoviesListResponse>(`${this.baseUrl}discover/movie?${objectToQueryParam(queryParameters)}`)
 			.pipe(
 				take(1),
 				shareReplay(1)
@@ -64,11 +64,19 @@ export class MoviesService {
 			page,
 			query: searchTerm
 		};
-		return this.http
-			.get<MoviesListResponse>(`${this.baseUrl}/search/movie?${objectToQueryParam(queryParameters)}`)
-			.pipe(
-				take(1),
-				shareReplay(1)
-			);
+		return this.http.get<MoviesListResponse>(`${this.baseUrl}search/movie?${objectToQueryParam(queryParameters)}`).pipe(
+			take(1),
+			shareReplay(1)
+		);
+	}
+
+	/**
+	 * If the url does not end with a trailing slash, add it.
+	 * @param url to check has trailing slash.
+	 */
+	private addTrailingSlash(url: string): string {
+		if (!url.endsWith('/')) {
+			return `${url}/`;
+		}
 	}
 }

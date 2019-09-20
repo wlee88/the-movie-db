@@ -2,42 +2,43 @@
 
 ## Initial Environment Setup
 
-`.env`
+### Development Environment
 
-- create a `.env` file at root with `API_KEY` and `API_URL`. It should look like this:
+- Create a `.env` file at root with `API_KEY` and `API_URL`. It should look like this:
 
 ```env
-API_URL=the-movie-db-api-
+API_URL=the-movie-db-api
 API_KEY=the-api-key
 ```
 
-```env
-PRODUCTION=TRUE
-```
+- This should be your api key provided from themoviedb -
+  see the [developers API portal](https://developers.themoviedb.org/3/).
+  As of now the latest API url is `https://api.themoviedb.org/3/`.
 
-For preparing a production build in .circleci / travisci
+## Production Environment
 
-If you have the
+For preparing a production build ensure that the `API_KEY`, `API_URL` are set
+and also `PRODUCTION` variables are set in the environment.
 
-- Run with `npm run start`.
+- Build with `npm run build`.
 
 ## Summary
 
 You can see a live preview [here](http://some-future-bucket-link).
 
-Benefits of this are:
-
-- works offline
-- fast and app like experience due to the service worker pre-caching everything.
-- can add this to your home screen (on android not sure about ios yet).
+## Time constraints
 
 ## Folder structure
 
-- Components
-- Contracts
-- Pages
-
-SCSS style tries to use [BEM - Block Element Modifier](http://getbem.com).
+- components
+- contracts
+- interceptors
+- pages
+- pipes
+- scss - for variables
+- services
+- testing
+- utils
 
 ## Getting up and Running
 
