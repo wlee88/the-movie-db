@@ -2,8 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const currentDirectory = __dirname;
 const environmentFilePath = `${currentDirectory}/src/environments/environment.ts`;
-
-const { API_URL, API_KEY } = process.env;
+let { API_URL, API_KEY, PRODUCTION } = process.env;
 
 if (!API_KEY) {
 	console.log('There is no API_KEY set. Please check your .env file or consult the README.');
@@ -12,8 +11,9 @@ if (!API_KEY) {
 } else {
 	const contents: string = JSON.stringify(
 		{
-			API_URL: process.env.API_URL,
-			API_KEY: process.env.API_KEY
+			API_URL,
+			API_KEY,
+			PRODUCTION: !!PRODUCTION
 		},
 		null,
 		' '

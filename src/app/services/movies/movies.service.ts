@@ -27,7 +27,7 @@ export class MoviesService {
 	 * @param id - of the movie.
 	 */
 	getMovie(id: number): Observable<Movie> {
-		return this.http.get<Movie>(`${this.baseUrl}/movie/${id}?api_key=${this.apiKey}`).pipe(
+		return this.http.get<Movie>(`${this.baseUrl}/movie/${id}`).pipe(
 			take(1),
 			shareReplay(1)
 		);
@@ -41,8 +41,7 @@ export class MoviesService {
 	getMostPopular(page: number = 1, sortBy = 'popularity.desc'): Observable<MoviesListResponse> {
 		const queryParameters = {
 			page,
-			sort_by: sortBy,
-			api_key: API_KEY
+			sort_by: sortBy
 		};
 
 		return this.http

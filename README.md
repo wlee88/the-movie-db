@@ -10,6 +10,8 @@
 API_URL: {{the-movie-db-api-
 ```
 
+- Run with `npm run start`.
+
 ## Summary
 
 You can see a live preview [here](http://some-future-bucket-link).

@@ -3,11 +3,11 @@
 	"version": "0.0.0",
 	"scripts": {
 		"ng": "ng",
-		"start": "ng serve",
-		"generate-environment-file": "ts-node generate-environment-file.ts",
-		"build": "ng build",
+		"start": "npm run generate-environment-file && ng serve",
+		"build": "npm run generate-environment-file && ng build",
 		"test": "ng test",
-		"lint": "npm run prettier && npm run tslint"
+		"lint": "npm run prettier && npm run tslint",
+		"generate-environment-file": "ts-node generate-environment-file.ts"
 	},
 	"private": true,
 	"dependencies": {

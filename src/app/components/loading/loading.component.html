@@ -1,3 +1,8 @@
 <div class="loading">
-	<span class="loading__text">Loading...</span>
+	<div class="loading__content d-flex h-100">
+		<div class="row justify-content-center align-self-center">
+			<fa-icon [icon]="faSpinner" [pulse]="true"></fa-icon>
+			<div class="loading__content-text">Loading...</div>
+		</div>
+	</div>
 </div>

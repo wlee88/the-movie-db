@@ -1,0 +1,24 @@
+@import 'src/app/scss/_colors.scss';
+
+.loading {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: $backgroundColor;
+
+	&__content {
+		width: 2rem;
+		height: 2rem;
+		margin: auto;
+		&-text {
+			font-size: 2rem;
+		}
+	}
+}
+
+fa-icon {
+	font-size: 3rem;
+	color: $white;
+}
