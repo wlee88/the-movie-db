@@ -32,16 +32,20 @@ hr {
 	margin: 0;
 }
 
-input {
-	::placeholder {
-		color: $primary;
-	}
+::placeholder {
+	color: $primary;
+}
+
+::selection {
+	color: $white;
+	background-color: $primary;
 }
 
 *:focus {
 	outline: none;
 }
 
+// sn loader overrides
 sn-image-loader {
 	img {
 		width: 100%;

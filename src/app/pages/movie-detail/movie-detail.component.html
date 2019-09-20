@@ -21,7 +21,7 @@
 				<div class="movie-detail__year-with-user-score">
 					<span class="movie-detail__year">{{ movie.release_date | date: 'yyyy' }}</span>
 					<span class="movie-detail__interpunct">·</span>
-					<span class="movie-detail__user-score">{{ movie.vote_average | scoreAsPercentage }} user score</span>
+					<span class="movie-detail__user-score">{{ movie.vote_average | scoreAsPercentage }} User Score</span>
 				</div>
 				<div class="duration">
 					{{ movie.runtime | durationToHours }}
