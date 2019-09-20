@@ -1,15 +1,15 @@
 <section class="search-bar">
-	<form [formGroup]="form">
+	<form [formGroup]="form" class="search-bar__container">
 		<input
 			#searchInput
 			type="text"
-			class="search-input"
+			class="search-bar__container-input"
 			[placeholder]="placeholder"
 			formControlName="searchText"
 			maxlength="100"
 			aria-label="search-input"
 			[value]="text"
 		/>
-		<fa-icon [icon]="faSearch" aria-label="search-box-placeholder"></fa-icon>
+		<fa-icon [icon]="faSearch" aria-label="search-box-placeholder" class="search-bar__container-icon"></fa-icon>
 	</form>
 </section>

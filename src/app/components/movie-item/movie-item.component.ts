@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from '../../contracts';
-import { ImageQuality, resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
+import {
+	IMAGE_MISSING_PLACEHOLDER_URL,
+	IMAGE_LOADING_PLACEHOLDER_URL,
+	ImageQuality,
+	resolveFullImagePath
+} from '../../utils/resolve-full-image-path/resolve-full-image-path';
 import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 
 @Component({
@@ -12,12 +17,11 @@ export class MovieItemComponent implements OnInit {
 	@Input() movie: Movie;
 	sizes: Breakpoint[] = [{ size: 'xs', width: 0 }, { size: 'md', width: 768 }, { size: 'lg', width: 992 }];
 	image: ResponsiveImage;
-	constructor() {}
 
 	ngOnInit() {
 		this.image = {
-			placeholder: 'http://via.placeholder.com/300x600?text=Image+Loading',
-			fallback: 'http://via.placeholder.com/300x600?text=Missing+Image',
+			placeholder: IMAGE_LOADING_PLACEHOLDER_URL,
+			fallback: IMAGE_MISSING_PLACEHOLDER_URL,
 			images: [
 				{
 					size: 'xs',

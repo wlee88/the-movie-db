@@ -3,7 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Movie } from '../../contracts';
 import { Observable, Subscription } from 'rxjs';
-import { ImageQuality, resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
+import {
+	IMAGE_LOADING_PLACEHOLDER_URL,
+	IMAGE_MISSING_PLACEHOLDER_URL,
+	ImageQuality,
+	resolveFullImagePath
+} from '../../utils/resolve-full-image-path/resolve-full-image-path';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MoviesService } from '../../services';
 import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
@@ -31,8 +36,8 @@ export class MovieDetailComponent implements OnInit {
 		this.movie$ = this.moviesService.getMovie(movieId);
 		this.movie$.subscribe(movie => {
 			this.image = {
-				placeholder: 'http://via.placeholder.com/100x150?text=Image+Loading',
-				fallback: 'http://via.placeholder.com/100x150?text=Missing+Image',
+				placeholder: IMAGE_LOADING_PLACEHOLDER_URL,
+				fallback: IMAGE_MISSING_PLACEHOLDER_URL,
 				images: [
 					{
 						size: 'xs',

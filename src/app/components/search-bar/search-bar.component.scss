@@ -10,23 +10,16 @@ $searchInputWidthOffset: 20px;
 	color: $primary;
 	background-color: $white;
 	box-shadow: $boxShadow;
-	border-radius: 20px;
-	width: $searchInputWidth;
-	height: $searchInputHeight;
-	position: relative;
-}
-.search-input {
-	position: absolute;
-	left: $searchInputWidthOffset;
-	top: $searchInputTop;
-	border: none;
-	width: 90%;
-	color: $primary;
-}
-
-fa-icon {
-	position: absolute;
-	right: $searchInputWidthOffset;
-	top: $searchInputTop;
-	color: $primary;
+	border-radius: 40px;
+	padding: 15px 15px;
+	&__container {
+		display: flex;
+		align-items: center;
+		&-input {
+			border: 0;
+			color: $primary;
+			width: 100%;
+			margin-left: 5px;
+		}
+	}
 }

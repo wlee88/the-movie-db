@@ -1,4 +1,8 @@
 const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/';
+
+export const IMAGE_LOADING_PLACEHOLDER_URL = 'http://via.placeholder.com/100x150?text=Image+Loading';
+export const IMAGE_MISSING_PLACEHOLDER_URL = 'http://via.placeholder.com/100x150?text=Missing+Image';
+
 export enum ImageQuality {
 	ORIGINAL = 'original',
 	HIGH = 'w500',
