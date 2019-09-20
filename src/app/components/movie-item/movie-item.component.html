@@ -1,6 +1,12 @@
 <article class="movie-item">
 	<div class="movie-item__image">
-		<img src="{{ resolveFullImagePath }}" />
+		<sn-image-loader
+			[image]="image"
+			[sizes]="sizes"
+			imgClass="movie-item__image-img"
+			alt="Cover art for {{ movie.title }}"
+		>
+		</sn-image-loader>
 		<badge [voteAverage]="movie.vote_average"></badge>
 	</div>
 	<div class="movie-item__summary">

@@ -3,7 +3,11 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 @import 'app/scss/_typography.scss';
 @import 'app/scss/_colors.scss';
+@import 'app/scss/_variables';
 
+html {
+	background: $backgroundColor;
+}
 body {
 	font-family: $primaryFont;
 	background: $backgroundColor;
@@ -36,4 +40,19 @@ input {
 
 *:focus {
 	outline: none;
+}
+
+sn-image-loader {
+	img {
+		width: 100%;
+		border-radius: 10px;
+		box-shadow: $boxShadow;
+	}
+	.sn-image-not-loaded ::ng-deep .img {
+		filter: blur(20px);
+	}
+
+	.sn-image-loaded ::ng-deep .img {
+		filter: blur(0);
+	}
 }

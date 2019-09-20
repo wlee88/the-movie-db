@@ -18,31 +18,41 @@ import { ScoreAsPercentagePipe } from './pipes/score-as-percentage/score-as-perc
 import { LoadingComponent } from './components/loading/loading.component';
 import { MoviesService, StoreService } from './services';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { ImageLoaderModule } from '@thisissoon/angular-image-loader';
+import { InViewportModule } from '@thisissoon/angular-inviewport';
 
+const COMPONENTS = [
+	AppComponent,
+	HeaderOverlayComponent,
+	LoadingComponent,
+	SearchBarComponent,
+	MovieItemComponent,
+	BadgeComponent
+];
+const MODULES = [
+	BrowserModule,
+	AppRoutingModule,
+	HttpClientModule,
+	FontAwesomeModule,
+	ReactiveFormsModule,
+	InViewportModule,
+	ImageLoaderModule
+];
 const PAGES = [MoviesComponent, MovieDetailComponent, NotFoundComponent];
-const APP_COMPONENTS = [AppComponent, HeaderOverlayComponent];
-
+const PIPES = [DurationToHoursPipe, ScoreAsPercentagePipe];
+const PROVIDERS = [
+	MoviesService,
+	StoreService,
+	{
+		provide: HTTP_INTERCEPTORS,
+		useClass: AuthenticationInterceptor,
+		multi: true
+	}
+];
 @NgModule({
-	declarations: [
-		...APP_COMPONENTS,
-		...PAGES,
-		SearchBarComponent,
-		MovieItemComponent,
-		BadgeComponent,
-		DurationToHoursPipe,
-		ScoreAsPercentagePipe,
-		LoadingComponent
-	],
-	imports: [BrowserModule, AppRoutingModule, HttpClientModule, FontAwesomeModule, ReactiveFormsModule],
-	providers: [
-		MoviesService,
-		StoreService,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: AuthenticationInterceptor,
-			multi: true
-		}
-	],
+	declarations: [...COMPONENTS, ...PAGES, ...PIPES],
+	imports: MODULES,
+	providers: PROVIDERS,
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -6,14 +6,14 @@
 
 - create a `.env` file at root with `API_KEY` and `API_URL`. It should look like this:
 
-```
+```env
 API_URL={{the-movie-db-api-}}
 API_KEY={{the-api-key}}
 ```
 
 If production also add
 
-```
+```env
 PRODUCTION=TRUE
 ```
 

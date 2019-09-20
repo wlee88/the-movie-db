@@ -22,6 +22,8 @@
 		"@fortawesome/angular-fontawesome": "^0.5.0",
 		"@fortawesome/fontawesome-svg-core": "^1.2.22",
 		"@fortawesome/free-solid-svg-icons": "^5.10.2",
+		"@thisissoon/angular-image-loader": "^5.1.0",
+		"@thisissoon/angular-inviewport": "^4.2.0",
 		"bootstrap": "^4.3.1",
 		"dotenv": "^8.1.0",
 		"rxjs": "~6.4.0",

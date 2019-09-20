@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Movie } from '../../contracts';
-import { Observable } from 'rxjs';
-import { resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
+import { Observable, Subscription } from 'rxjs';
+import { ImageQuality, resolveFullImagePath } from '../../utils/resolve-full-image-path/resolve-full-image-path';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MoviesService } from '../../services';
+import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 
 @Component({
 	selector: 'app-movie-detail',
@@ -15,6 +16,10 @@ import { MoviesService } from '../../services';
 export class MovieDetailComponent implements OnInit {
 	faSpinner = faSpinner;
 	movie$: Observable<Movie>;
+
+	sizes: Breakpoint[] = [{ size: 'xs', width: 0 }, { size: 'md', width: 768 }, { size: 'lg', width: 992 }];
+	image: ResponsiveImage;
+
 	constructor(
 		private readonly location: Location,
 		private readonly route: ActivatedRoute,
@@ -24,10 +29,33 @@ export class MovieDetailComponent implements OnInit {
 	ngOnInit(): void {
 		const movieId = this.route.snapshot.params.id;
 		this.movie$ = this.moviesService.getMovie(movieId);
+		this.movie$.subscribe(movie => {
+			this.image = {
+				placeholder: 'http://via.placeholder.com/100x150?text=Image+Loading',
+				fallback: 'http://via.placeholder.com/100x150?text=Missing+Image',
+				images: [
+					{
+						size: 'xs',
+						x1: this.resolveFullImagePath(movie.poster_path, ImageQuality.LOW),
+						x2: this.resolveFullImagePath(movie.poster_path, ImageQuality.LOW)
+					},
+					{
+						size: 'md',
+						x1: this.resolveFullImagePath(movie.poster_path, ImageQuality.MEDIUM),
+						x2: this.resolveFullImagePath(movie.poster_path, ImageQuality.MEDIUM)
+					},
+					{
+						size: 'lg',
+						x1: this.resolveFullImagePath(movie.poster_path, ImageQuality.HIGH),
+						x2: this.resolveFullImagePath(movie.poster_path, ImageQuality.HIGH)
+					}
+				]
+			};
+		});
 	}
 
-	resolveFullImagePath(movieImageUrl: string): string {
-		return resolveFullImagePath(movieImageUrl);
+	resolveFullImagePath(movieImageUrl: string, imageQuality: ImageQuality): string {
+		return resolveFullImagePath(movieImageUrl, imageQuality);
 	}
 
 	backButtonSelected() {

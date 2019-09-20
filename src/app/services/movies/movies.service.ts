@@ -6,10 +6,9 @@ import { Movie, MoviesListResponse } from '../../contracts';
 import { objectToQueryParam } from '../../utils/object-to-query-param';
 import { ConfigurationService } from '../configuration/configuration.service';
 
-// TODO move to injectable app config.
-export const API_BASE_URL = 'https://api.themoviedb.org/3';
-export const API_KEY = '6ed12e064b90ae1290fa326ce9e790ff';
-
+/**
+ * Note: all queries are cached via shareReplay.
+ */
 @Injectable({
 	providedIn: 'root'
 })
@@ -24,6 +23,7 @@ export class MoviesService {
 
 	/**
 	 * Given a movie id, return it's details from the-movie-db API.
+	 * No need to unsubscribe to this subscription as `take` will finish it as soon as the request is returned.
 	 * @param id - of the movie.
 	 */
 	getMovie(id: number): Observable<Movie> {
@@ -34,7 +34,8 @@ export class MoviesService {
 	}
 
 	/**
-	 *  Get summary level information on  most popular movies from the-movie-db API.
+	 * Get summary level information on  most popular movies from the-movie-db API.
+	 * No need to unsubscribe to this subscription as `take` will finish it as soon as the request is returned.
 	 * @param page - number to query
 	 * @param sortBy - specify the data you wish to sort by - more info at @see https://www.themoviedb.org/documentation/api/discover
 	 */
@@ -62,8 +63,7 @@ export class MoviesService {
 	searchMovies(searchTerm: string, page: number = 1): Observable<MoviesListResponse> {
 		const queryParameters = {
 			page,
-			query: searchTerm,
-			api_key: API_KEY
+			query: searchTerm
 		};
 		return this.http
 			.get<MoviesListResponse>(`${this.baseUrl}/search/movie?${objectToQueryParam(queryParameters)}`)
