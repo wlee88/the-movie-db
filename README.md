@@ -7,8 +7,17 @@
 - create a `.env` file at root with `API_KEY` and `API_URL`. It should look like this:
 
 ```
-API_URL: {{the-movie-db-api-
+API_URL={{the-movie-db-api-}}
+API_KEY={{the-api-key}}
 ```
+
+If production also add
+
+```
+PRODUCTION=TRUE
+```
+
+If this variable isn't specified it defaults to false.
 
 - Run with `npm run start`.
 
