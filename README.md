@@ -7,17 +7,17 @@
 - create a `.env` file at root with `API_KEY` and `API_URL`. It should look like this:
 
 ```env
-API_URL={{the-movie-db-api-}}
-API_KEY={{the-api-key}}
+API_URL=the-movie-db-api-
+API_KEY=the-api-key
 ```
-
-If production also add
 
 ```env
 PRODUCTION=TRUE
 ```
 
-If this variable isn't specified it defaults to false.
+For preparing a production build in .circleci / travisci
+
+If you have the
 
 - Run with `npm run start`.
 
@@ -58,11 +58,28 @@ No need to worry about ongoing server costs.
 
 # Features
 
-- Named modules
-- linting?
-- (typescript incremental build.. let's see)
-- terraform
-- dockerfile
+- Progressive image loading.
+- Decent test coverage on pages.
+- CI/CD pipeline
+
+## Could be improved
+
+- Due to lack of time I only tested the main pages, but with a
+  but more time I would add them to components for more thorough testing.
+- I feel I rushed certain things that could have been more generic or
+  better thought out such as pipes - such as the durationToHours pipe.
+  This could have been made to be much more flexible such as allowing the
+  over view text to be changed or formatting.
+- Could have used rem instead of px everywhere.
+- Could have reduced the size of the headings for mobile just a touch.
+- Could have introduced name spaces to modules. i.e @services/blah or @components/some-component
+- Could have made this into a progressive web app.
+- Could have broken down various components into even smaller parts for better
+  reusability - didn't see the point of it for the scope of this exercise.
+- Installed typescript 3.6 and utilise incremental builds - used angular-cli so can't get it quite yet https://github.com/angular/angular-cli/issues/13941
+- API key is in the url could be done via a proxy server which has the key instead. No need for http interceptor.
+- Wasn't overly happy with my implementation of the overlay - in hindsight i could've experimented with with flex and a direct image overlay.
+- Could've explored server side rendering - haven't done this but know the Benefits are great. Better SEO as static page, less load on client so better support on all mobiles / devices
 
 ## Development server
 
