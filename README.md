@@ -1,6 +1,6 @@
 # TheMovieDb
 
-You can see a live preview [here](http://the-movie-db.william-lee.com.s3-website-ap-southeast-2.amazonaws.com/).
+You can see a live preview [here](http://the-movie-db.william-lee.com).
 
 ## Getting up and running
 

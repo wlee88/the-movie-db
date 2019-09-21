@@ -27,7 +27,7 @@ jobs:
           name: Build
           command: yarn build
       - persist_to_workspace:
-          root: /tmp/app
+          root: ./
           paths:
             - dist/the-movie-db
   deploy:
@@ -35,7 +35,7 @@ jobs:
       - image: circleci/python:latest
     steps:
       - attach_workspace:
-          at: /tmp/app
+          at: /tmp/workspace
       - run:
           name: Install dependencies
           command: sudo pip install awscli
