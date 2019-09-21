@@ -44,7 +44,7 @@ jobs:
           command: echo find /tmp/workspace -type f -printf "%f\n"
       - run:
           name: Deploy to S3
-          command: aws s3 cp /tmp/workspace/ s3://the-movie-db.william-lee.com/
+          command: aws s3 cp --recursive /tmp/workspace/dist/the-movie-db/ s3://the-movie-db.william-lee.com/
 
 workflows:
   version: 2
