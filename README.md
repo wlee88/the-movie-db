@@ -1,6 +1,6 @@
 # TheMovieDb
 
-You can see a live preview [here](http://some-future-bucket-link).
+You can see a live preview [here](http://the-movie-db.william-lee.com.s3-website-ap-southeast-2.amazonaws.com/).
 
 ## Getting up and running
 
@@ -49,7 +49,7 @@ and also `PRODUCTION` variables are set in the environment.
 
 - Could be a progressive web app so it works offline, and faster app like experience
 - Those fallback images and loading images are courtesy of [placeholder.com](placeholder.com).
-  They could have beeen refined much better for a better user experience.
+  They could have been refined much better for a better user experience.
 - API key is in the url could be done via a proxy server which has the key instead. No need for http interceptor and webpack Injection for key
 - Server side rendering - For better performance and SEO as static page, less load on client so better support on all mobiles / devices
 - Could've broken down components small for better reusability.
@@ -58,6 +58,8 @@ and also `PRODUCTION` variables are set in the environment.
 - Could have reduced the rem of the fonts on mobile.
 - `px` to `rem`. it's much more maintainable and sustainable to use `rem`.
 - Path name mapping (i.e introduction of named module) for cleaner imports.
+- In hindsight I shouldn't have made `PRODUCTION` a necessary environment.
+  This should have been a flag like `build:production`
 
 ## Code scaffolding
 

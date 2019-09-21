@@ -1,0 +1,56 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.16.0-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Install node depedencies
+          command: yarn
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Linting
+          command: yarn lint
+      - run:
+          name: Tests
+          command: yarn test
+      - run:
+          name: Build
+          command: yarn build
+      - persist_to_workspace:
+          root: /tmp/app
+          paths:
+            - dist/the-movie-db
+  deploy:
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - attach_workspace:
+          at: /tmp/app
+      - run:
+          name: Install dependencies
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to S3
+          command: aws s3 cp /tmp/workspace/ s3://the-movie-db.william-lee.com
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
