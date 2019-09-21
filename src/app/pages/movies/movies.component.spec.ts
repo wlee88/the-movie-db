@@ -68,14 +68,6 @@ describe('MoviesComponent', () => {
 				fixture.detectChanges();
 			});
 
-			it('should display the right heading', () => {
-				const MOVIES_HEADING_CSS_SELECTOR = '.movies__heading';
-				const moviesHeadingElement: HTMLElement = fixture.debugElement.query(By.css(MOVIES_HEADING_CSS_SELECTOR))
-					.nativeElement;
-				const expected = 'Results';
-
-				expect(moviesHeadingElement.textContent).toBe(expected);
-			});
 			describe('and the results set is empty', () => {
 				beforeEach(() => {
 					sut.movies$ = of([]);

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { merge, Observable, Subject } from 'rxjs';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, merge, Observable, Subject, Subscription } from 'rxjs';
 import { filter, flatMap, map } from 'rxjs/operators';
 
 import { Movies } from '../../contracts';
@@ -11,11 +11,15 @@ import { SearchBarForm } from '../../contracts/search-bar-form';
 	templateUrl: './movies.component.html',
 	styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent implements OnInit, OnDestroy {
+	currentPageNumber$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 	currentSearchTerm: string;
 	movies$: Observable<Movies>;
-	refreshSubject$: Subject<void> = new Subject<void>();
+	moviesCache: Movies = [];
+	refreshPopularMovies$: Subject<void> = new Subject<void>();
+	refreshSearchResults$: Subject<void> = new Subject<void>();
 	storedSearchValue$: Observable<string>;
+	subscriptions: Subscription[] = [];
 
 	constructor(private readonly moviesService: MoviesService, private readonly storeService: StoreService) {
 		this.storedSearchValue$ = this.storeService.getObservable();
@@ -23,31 +27,62 @@ export class MoviesComponent implements OnInit {
 
 	ngOnInit() {
 		/**
-		 * Needs refining, as still will get most popular movies when there exists a stored search value.
-		 * Luckily the movies service caches results so no extra network call is needed.
-		 * It shows the results from store (if there is a value) because this is the last observable emitted
+		 * - Call getMostPopularMovies to get the initial page load data (i.e the most popular movies). This does not
+		 * emit if there is a storedValue.
+		 * - If a search term is emitted, retrieve the movies via the search term.
 		 */
 		this.movies$ = merge(
-			this.refreshSubject$.pipe(flatMap(_ => this.getMostPopularMovies())),
 			this.getMostPopularMovies(),
-			this.retrieveMoviesFromSearchTerm()
+			this.retrieveMoviesFromSearchTerm(),
+			this.refreshSearchResults$.pipe(flatMap(_ => this.retrieveMoviesFromSearchTerm())),
+			this.refreshPopularMovies$.pipe(flatMap(() => this.getMostPopularMovies()))
 		);
+
+		const updateMoviesCacheSubscription = this.movies$.subscribe(movies => {
+			this.moviesCache = this.moviesCache.concat(movies);
+		});
+
+		// We need to reset the movies cache and the page number as the search term has changed.
+		const storedSearchValueSubscription = this.storedSearchValue$.subscribe(() => this.resetMoviesCache());
+
+		const currentPageNumberSubscription = this.currentPageNumber$
+			.pipe(filter(pageNumber => pageNumber > 1))
+			.subscribe(() => {
+				this.emitRefresh();
+			});
+
+		this.subscriptions.push(
+			updateMoviesCacheSubscription,
+			storedSearchValueSubscription,
+			currentPageNumberSubscription
+		);
+	}
+
+	private emitRefresh() {
+		if (this.storeService.getValue()) {
+			this.refreshSearchResults$.next();
+		} else {
+			this.refreshPopularMovies$.next();
+		}
+	}
+
+	ngOnDestroy() {
+		this.subscriptions.forEach(subscription => subscription.unsubscribe());
+	}
+
+	private resetMoviesCache() {
+		this.moviesCache = [];
 	}
 
 	private retrieveMoviesFromSearchTerm() {
 		return this.storedSearchValue$.pipe(
 			filter(value => !!value),
 			flatMap(searchText =>
-				this.moviesService.searchMovies(searchText).pipe(map(moviesListResponse => moviesListResponse.results))
+				this.moviesService
+					.searchMovies(searchText, this.currentPageNumber$.getValue())
+					.pipe(map(moviesListResponse => moviesListResponse.results))
 			)
 		);
-	}
-
-	get heading(): string {
-		const POPULAR_MOVIES = 'Popular Movies';
-		const RESULTS = 'Results';
-
-		return this.storeService.getValue() ? RESULTS : POPULAR_MOVIES;
 	}
 
 	/**
@@ -61,7 +96,7 @@ export class MoviesComponent implements OnInit {
 
 		// The search term is empty so show the list of popular movies.
 		if (!searchText) {
-			this.refreshSubject$.next();
+			this.refreshPopularMovies$.next();
 		}
 	}
 
@@ -69,17 +104,14 @@ export class MoviesComponent implements OnInit {
 		return !!this.storeService.getValue();
 	}
 
-	scrollToSearchBar() {
-		const SEARCH_BAR_CSS_SELECTOR = 'search-bar';
-		const element = document.querySelector(SEARCH_BAR_CSS_SELECTOR);
-		const headerOffset = 20;
-		const elementPosition = element.getBoundingClientRect().top;
-		const offsetPosition = elementPosition - headerOffset;
-
-		window.scrollTo({
-			top: offsetPosition,
-			behavior: 'smooth'
-		});
+	@HostListener('window:scroll', ['$event'])
+	incrementCurrentPageNumber() {
+		// Scroll to bottom behaviour on mac has quirks - @see https://stackoverflow.com/a/40370876
+		const userScrollToBottomOfThePage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
+		if (userScrollToBottomOfThePage) {
+			const currentPageNumber = this.currentPageNumber$.getValue();
+			this.currentPageNumber$.next(currentPageNumber + 1);
+		}
 	}
 
 	/**
@@ -88,7 +120,8 @@ export class MoviesComponent implements OnInit {
 	 */
 	private getMostPopularMovies(): Observable<Movies> {
 		const storeHasValue = this.storeService.getValue();
-		return this.moviesService.getMostPopular().pipe(
+
+		return this.moviesService.getMostPopular(this.currentPageNumber$.getValue()).pipe(
 			filter(_ => !storeHasValue),
 			map(moviesListResponse => moviesListResponse.results)
 		);

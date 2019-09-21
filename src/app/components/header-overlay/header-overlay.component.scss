@@ -22,7 +22,8 @@ $backButtonIconFontSize: 1.5rem;
 		align-items: center;
 		justify-content: center;
 
-		.icon {
+		&-icon {
+			cursor: pointer;
 			max-width: 50%;
 		}
 	}

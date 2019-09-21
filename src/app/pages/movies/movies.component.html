@@ -1,20 +1,16 @@
 <header-overlay></header-overlay>
 <div class="container movies__container">
-	<search-bar
-		[text]="storedSearchValue$ | async"
-		(formChange)="searchAndUpdateMovies($event)"
-		(click)="scrollToSearchBar()"
-	></search-bar>
+	<search-bar [text]="storedSearchValue$ | async" (formChange)="searchAndUpdateMovies($event)"></search-bar>
 
 	<section class="movies__heading">
-		<h2>{{ heading }}</h2>
+		<h2 *ngIf="!existsSearchValue">Popular Movies</h2>
 	</section>
 
-	<div class="movies__items row" *ngIf="movies$ | async as movies; else loading">
-		<article class="movies__items-empty" *ngIf="movies.length === 0">
+	<div class="movies__items row" *ngIf="movies$ | async; else loading">
+		<article class="movies__items-empty" *ngIf="moviesCache.length === 0">
 			<h3>No results found for: {{ storedSearchValue$ | async }}</h3>
 		</article>
-		<article class="col-md-3 col-6" *ngFor="let movie of movies">
+		<article class="col-md-3 col-6" *ngFor="let movie of moviesCache">
 			<movie-item [movie]="movie" [routerLink]="[movie.id]"></movie-item>
 		</article>
 	</div>

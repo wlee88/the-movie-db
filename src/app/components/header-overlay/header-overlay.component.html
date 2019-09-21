@@ -1,5 +1,10 @@
 <section class="header header__container" [ngStyle]="{ 'background-image': backgroundImageInlineStyle }">
-	<img src="assets/icons/the-movie-db-icon.svg" alt="Icon of the movie db" class="icon" />
+	<img
+		src="assets/icons/the-movie-db-icon.svg"
+		[routerLink]="['/']"
+		alt="Icon of the movie db"
+		class="header__container-icon"
+	/>
 	<button
 		class="btn header__back-button"
 		aria-label="back-button"

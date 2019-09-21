@@ -41,6 +41,7 @@ and also `PRODUCTION` variables are set in the environment.
 - Behaviour subject store for keeping track of the user search time -
   this persists history when the user clicks a movie.
 - Theme color on chrome android.
+- Clickable icon to go back to the homepage.
 - A 404 page.
 - CI/CD pipeline for quick and easy deployment straight to AWS S3.
 
@@ -50,6 +51,7 @@ and also `PRODUCTION` variables are set in the environment.
 - Would have fixed a bug where the user can click the search bar twice and it will go to the top of the
   page again - it's quite annoying.
 - No error handling on network issues - it doesn't handle these gracefully.
+- Would have liked to add a loading overlay when fetching new movies during infinite scroll.
 
 ## Room for improvement
 
@@ -70,6 +72,14 @@ and also `PRODUCTION` variables are set in the environment.
   to make a smart back button which is aware of the color and can display
   the inverse of the background color average.
 - Would be nice if the app scrolled to the search bar when you click back when viewing a movie.
+- Would be great to hide the keyboard when the user finishes searching for
+  a movie (i.e either clicks away or presses enter).
+- Currently API calls to retrieve movies are cached. It'd be great to have
+  a background worker checking if this data is stale - and notify the user to
+  refresh. In my opinion this would create a better UX experience over simply
+  overriding stale data without asking the user - the reason being that the user
+  won't understand what is going on, may perceive the the auto refresh as a glitch
+  and we will lose user's trust in our interface.
 
 ## Code scaffolding
 
