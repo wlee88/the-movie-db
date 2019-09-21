@@ -42,8 +42,7 @@ and also `PRODUCTION` variables are set in the environment.
 
 ## Time constraints
 
-- Testing of smaller components was omitted for time constraints.
-  Could also have expanded more.
+- Testing of smaller components was omitted - so no test coverage for them as of now.
 
 ## Room for improvement
 
