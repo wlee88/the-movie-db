@@ -64,6 +64,10 @@ export class MoviesComponent implements OnInit {
 		}
 	}
 
+	get existsSearchValue(): boolean {
+		return !!this.storeService.getValue();
+	}
+
 	scrollToSearchBar() {
 		const SEARCH_BAR_CSS_SELECTOR = 'search-bar';
 		const element = document.querySelector(SEARCH_BAR_CSS_SELECTOR);

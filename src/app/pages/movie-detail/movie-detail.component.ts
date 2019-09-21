@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { Movie } from '../../contracts';
 import { Observable } from 'rxjs';
 import {
+	BREAKPOINTS,
 	IMAGE_LOADING_PLACEHOLDER_URL,
 	IMAGE_MISSING_PLACEHOLDER_URL,
 	ImageQuality,
@@ -20,7 +21,7 @@ import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 export class MovieDetailComponent implements OnInit {
 	movie$: Observable<Movie>;
 
-	sizes: Breakpoint[] = [{ size: 'xs', width: 0 }, { size: 'md', width: 768 }, { size: 'lg', width: 992 }];
+	sizes: Breakpoint[] = BREAKPOINTS;
 	image: ResponsiveImage;
 	originalImageQuality = ImageQuality.ORIGINAL;
 

@@ -21,5 +21,10 @@
 </div>
 
 <ng-template #loading>
-	Loading Movies...
+	<div *ngIf="!existsSearchValue">
+		<loading></loading>
+	</div>
+	<div *ngIf="existsSearchValue">
+		Loading...
+	</div>
 </ng-template>

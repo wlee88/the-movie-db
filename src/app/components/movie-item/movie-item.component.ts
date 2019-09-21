@@ -4,7 +4,8 @@ import {
 	IMAGE_MISSING_PLACEHOLDER_URL,
 	IMAGE_LOADING_PLACEHOLDER_URL,
 	ImageQuality,
-	resolveFullImagePath
+	resolveFullImagePath,
+	BREAKPOINTS
 } from '../../utils/resolve-full-image-path/resolve-full-image-path';
 import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 
@@ -15,7 +16,7 @@ import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 })
 export class MovieItemComponent implements OnInit {
 	@Input() movie: Movie;
-	sizes: Breakpoint[] = [{ size: 'xs', width: 0 }, { size: 'md', width: 768 }, { size: 'lg', width: 992 }];
+	sizes: Breakpoint[] = BREAKPOINTS;
 	image: ResponsiveImage;
 
 	ngOnInit() {
