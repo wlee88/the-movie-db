@@ -52,11 +52,4 @@ sn-image-loader {
 		border-radius: 10px;
 		box-shadow: $boxShadow;
 	}
-	.sn-image-not-loaded ::ng-deep .img {
-		filter: blur(20px);
-	}
-
-	.sn-image-loaded ::ng-deep .img {
-		filter: blur(0);
-	}
 }
