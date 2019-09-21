@@ -37,6 +37,7 @@ and also `PRODUCTION` variables are set in the environment.
 - Fallback missing images for those photos without photos.
 - Behaviour subject store for keeping track of the user search time -
   this persists history when the user clicks a movie.
+- A 404 page.
 - CI/CD pipeline for quick and easy deployment straight to S3.
 
 ## Time constraints
@@ -46,12 +47,17 @@ and also `PRODUCTION` variables are set in the environment.
 
 ## Room for improvement
 
+- Could be a progressive web app so it works offline, and faster app like experience
 - Those fallback images and loading images are courtesy of [placeholder.com](placeholder.com).
   They could have beeen refined much better for a better user experience.
 - API key is in the url could be done via a proxy server which has the key instead. No need for http interceptor and webpack Injection for key
 - Server side rendering - For better performance and SEO as static page, less load on client so better support on all mobiles / devices
 - Could've broken down components small for better reusability.
 - Enable Typescript incremental builds when this is supported - https://github.com/angular/angular-cli/issues/13941)
+- Could have made the durationToHours pipe more flexible - it's not flexible on formatting at all.
+- Could have reduced the rem of the fonts on mobile.
+- `px` to `rem`. it's much more maintainable and sustainable to use `rem`.
+- Path name mapping (i.e introduction of named module) for cleaner imports.
 
 ## Code scaffolding
 
