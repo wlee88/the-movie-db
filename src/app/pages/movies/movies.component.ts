@@ -60,6 +60,19 @@ export class MoviesComponent implements OnInit {
 		}
 	}
 
+	scrollToSearchBar() {
+		const SEARCH_BAR_CSS_SELECTOR = 'search-bar';
+		const element = document.querySelector(SEARCH_BAR_CSS_SELECTOR);
+		const headerOffset = 20;
+		const elementPosition = element.getBoundingClientRect().top;
+		const offsetPosition = elementPosition - headerOffset;
+
+		window.scrollTo({
+			top: offsetPosition,
+			behavior: 'smooth'
+		});
+	}
+
 	private getMostPopularMovies(): Observable<Movies> {
 		return this.moviesService.getMostPopular().pipe(map(moviesListResponse => moviesListResponse.results));
 	}

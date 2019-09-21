@@ -37,6 +37,7 @@ and also `PRODUCTION` variables are set in the environment.
 - Fallback missing images for those photos without photos.
 - Behaviour subject store for keeping track of the user search time -
   this persists history when the user clicks a movie.
+- Scrolls to the search bar when you press it for an improved mobile experience.
 - A 404 page.
 - CI/CD pipeline for quick and easy deployment straight to S3.
 

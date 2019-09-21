@@ -1,6 +1,10 @@
 <header-overlay></header-overlay>
 <div class="container movies__container">
-	<search-bar [text]="storedSearchValue$ | async" (formChange)="searchAndUpdateMovies($event)"></search-bar>
+	<search-bar
+		[text]="storedSearchValue$ | async"
+		(formChange)="searchAndUpdateMovies($event)"
+		(click)="scrollToSearchBar()"
+	></search-bar>
 
 	<section class="movies__heading">
 		<h2>{{ heading }}</h2>
