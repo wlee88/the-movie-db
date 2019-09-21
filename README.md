@@ -80,6 +80,8 @@ and also `PRODUCTION` variables are set in the environment.
   overriding stale data without asking the user - the reason being that the user
   won't understand what is going on, may perceive the the auto refresh as a glitch
   and we will lose user's trust in our interface.
+- Would be great to remember where the user's position was, and cache all of the infinite scroll results
+  so that the user can go back to that very position.
 
 ## Code scaffolding
 
