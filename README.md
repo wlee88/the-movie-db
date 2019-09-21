@@ -59,7 +59,10 @@ and also `PRODUCTION` variables are set in the environment.
 - `px` to `rem`. it's much more maintainable and sustainable to use `rem`.
 - Path name mapping (i.e introduction of named module) for cleaner imports.
 - In hindsight I shouldn't have made `PRODUCTION` a necessary environment.
-  This should have been a flag like `build:production`
+  This should have been a flag that is generated via `build:production`
+- The back button is transparent when the poster is white. It'd be nice
+  to make a smart back button which is aware of the color and can display
+  the inverse of the background color average.
 
 ## Code scaffolding
 
