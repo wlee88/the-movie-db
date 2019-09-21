@@ -1,5 +1,6 @@
-import { StoreService } from './store.service';
 import * as uuid from 'uuid';
+
+import { StoreService } from './store.service';
 
 describe('StoreService', () => {
 	let sut: StoreService;

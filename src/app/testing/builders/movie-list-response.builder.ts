@@ -1,5 +1,5 @@
-import { MoviesListResponse } from '../../contracts';
 import { AbstractBuilder } from '../abstract-builder';
+import { MoviesListResponse } from '../../contracts';
 import { MovieBuilder } from './movie.builder';
 
 export class MovieListResponseBuilder extends AbstractBuilder<MoviesListResponse> {

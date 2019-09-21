@@ -15,10 +15,4 @@ describe('AppComponent', () => {
 		const app = fixture.debugElement.componentInstance;
 		expect(app).toBeTruthy();
 	});
-
-	it(`should have as title 'the-movie-db'`, () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.debugElement.componentInstance;
-		expect(app.title).toEqual('the-movie-db');
-	});
 });

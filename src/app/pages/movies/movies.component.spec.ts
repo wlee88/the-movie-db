@@ -1,13 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MoviesComponent } from './movies.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MoviesService, StoreService } from '../../services';
-import { ConfigurationService } from '../../services/configuration/configuration.service';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
-import { MovieBuilder } from '../../testing/builders/movie.builder';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import * as uuid from 'uuid';
+
+import { ConfigurationService } from '../../services/configuration/configuration.service';
+import { MovieBuilder } from '../../testing/builders/movie.builder';
+import { MoviesComponent } from './movies.component';
+import { MoviesService, StoreService } from '../../services';
 
 describe('MoviesComponent', () => {
 	let sut: MoviesComponent;

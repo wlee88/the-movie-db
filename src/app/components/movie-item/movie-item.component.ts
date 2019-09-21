@@ -1,13 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Movie } from '../../contracts';
-import {
-	IMAGE_MISSING_PLACEHOLDER_URL,
-	IMAGE_LOADING_PLACEHOLDER_URL,
-	ImageQuality,
-	resolveFullImagePath,
-	BREAKPOINTS
-} from '../../utils/resolve-full-image-path/resolve-full-image-path';
 import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
+import { Component, Input, OnInit } from '@angular/core';
+
+import {
+	BREAKPOINTS,
+	IMAGE_LOADING_PLACEHOLDER_URL,
+	IMAGE_MISSING_PLACEHOLDER_URL,
+	ImageQuality,
+	prepareResponsiveImages,
+	resolveFullImagePath
+} from '../../utils/resolve-full-image-path';
+import { Movie } from '../../contracts';
 
 @Component({
 	selector: 'movie-item',
@@ -16,30 +18,15 @@ import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 })
 export class MovieItemComponent implements OnInit {
 	@Input() movie: Movie;
-	sizes: Breakpoint[] = BREAKPOINTS;
+
 	image: ResponsiveImage;
+	sizes: Breakpoint[] = BREAKPOINTS;
 
 	ngOnInit() {
 		this.image = {
 			placeholder: IMAGE_LOADING_PLACEHOLDER_URL,
 			fallback: IMAGE_MISSING_PLACEHOLDER_URL,
-			images: [
-				{
-					size: 'xs',
-					x1: this.resolveFullImagePath(ImageQuality.LOW),
-					x2: this.resolveFullImagePath(ImageQuality.LOW)
-				},
-				{
-					size: 'md',
-					x1: this.resolveFullImagePath(ImageQuality.MEDIUM),
-					x2: this.resolveFullImagePath(ImageQuality.MEDIUM)
-				},
-				{
-					size: 'lg',
-					x1: this.resolveFullImagePath(ImageQuality.HIGH),
-					x2: this.resolveFullImagePath(ImageQuality.HIGH)
-				}
-			]
+			images: prepareResponsiveImages(this.movie)
 		};
 	}
 

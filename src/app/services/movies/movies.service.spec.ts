@@ -2,12 +2,13 @@ import { MoviesService } from './movies.service';
 import { HttpClient } from '@angular/common/http';
 import { IMock, Mock, Times } from 'typemoq';
 import { of } from 'rxjs';
+import * as uuid from 'uuid';
+
+import { ConfigurationService } from '../configuration/configuration.service';
 import { Movie, MoviesListResponse } from '../../contracts';
 import { MovieListResponseBuilder } from '../../testing/builders/movie-list-response.builder';
-import { objectToQueryParam } from '../../utils/object-to-query-param';
 import { MovieBuilder } from '../../testing/builders/movie.builder';
-import { ConfigurationService } from '../configuration/configuration.service';
-import * as uuid from 'uuid';
+import { objectToQueryParam } from '../../utils/object-to-query-param';
 
 describe('MoviesService', () => {
 	let sut: MoviesService;
@@ -23,7 +24,7 @@ describe('MoviesService', () => {
 			.setup(x => x.apiUrl())
 			.returns(() => apiUrl)
 			.verifiable(Times.once());
-		sut = new MoviesService(http.object, configurationService.object);
+		sut = new MoviesService(configurationService.object, http.object);
 	});
 
 	afterEach(() => {

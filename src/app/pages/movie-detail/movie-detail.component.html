@@ -1,7 +1,7 @@
 <section class="movie-detail" *ngIf="movie$ | async as movie; else loading">
 	<header-overlay
 		[shouldShowBackButton]="true"
-		(backButtonSelected)="backButtonSelected()"
+		(backButtonSelected)="goBack()"
 		[overrideBackgroundImageUrlWith]="resolveFullImagePath(movie.backdrop_path, originalImageQuality)"
 	></header-overlay>
 	<div class="container">

@@ -1,7 +1,8 @@
+import * as uuid from 'uuid';
+
 import { Movie } from '../../contracts';
 import { AbstractBuilder } from '../abstract-builder';
 import { randomNumber } from '../../utils/random-number';
-import * as uuid from 'uuid';
 
 export class MovieBuilder extends AbstractBuilder<Movie> {
 	constructor() {

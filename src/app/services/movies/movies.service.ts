@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, shareReplay, take } from 'rxjs/operators';
+import { shareReplay, take } from 'rxjs/operators';
+
+import { ConfigurationService } from '../configuration/configuration.service';
 import { Movie, MoviesListResponse } from '../../contracts';
 import { objectToQueryParam } from '../../utils/object-to-query-param';
-import { ConfigurationService } from '../configuration/configuration.service';
 
 /**
  * Note: all queries are cached via shareReplay.
@@ -16,7 +17,7 @@ export class MoviesService {
 	private readonly apiKey;
 	private readonly baseUrl;
 
-	constructor(private readonly http: HttpClient, private readonly configurationService: ConfigurationService) {
+	constructor(private readonly configurationService: ConfigurationService, private readonly http: HttpClient) {
 		this.apiKey = this.configurationService.apiKey();
 		this.baseUrl = this.addTrailingSlash(this.configurationService.apiUrl());
 	}
@@ -64,6 +65,7 @@ export class MoviesService {
 			page,
 			query: searchTerm
 		};
+
 		return this.http.get<MoviesListResponse>(`${this.baseUrl}search/movie?${objectToQueryParam(queryParameters)}`).pipe(
 			take(1),
 			shareReplay(1)

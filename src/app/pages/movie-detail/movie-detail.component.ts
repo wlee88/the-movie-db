@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Movie } from '../../contracts';
 import { Observable } from 'rxjs';
+import { Breakpoint, ResponsiveImage, RetinaImage } from '@thisissoon/angular-image-loader';
+
 import {
 	BREAKPOINTS,
 	IMAGE_LOADING_PLACEHOLDER_URL,
 	IMAGE_MISSING_PLACEHOLDER_URL,
 	ImageQuality,
+	prepareResponsiveImages,
 	resolveFullImagePath
-} from '../../utils/resolve-full-image-path/resolve-full-image-path';
+} from '../../utils/resolve-full-image-path';
+import { Movie } from '../../contracts';
 import { MoviesService } from '../../services';
-import { Breakpoint, ResponsiveImage } from '@thisissoon/angular-image-loader';
 
 @Component({
 	selector: 'app-movie-detail',
@@ -27,34 +29,19 @@ export class MovieDetailComponent implements OnInit {
 
 	constructor(
 		private readonly location: Location,
-		private readonly route: ActivatedRoute,
-		private readonly moviesService: MoviesService
+		private readonly moviesService: MoviesService,
+		private readonly route: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
 		const movieId = this.route.snapshot.params.id;
+
 		this.movie$ = this.moviesService.getMovie(movieId);
 		this.movie$.subscribe(movie => {
 			this.image = {
 				placeholder: IMAGE_LOADING_PLACEHOLDER_URL,
 				fallback: IMAGE_MISSING_PLACEHOLDER_URL,
-				images: [
-					{
-						size: 'xs',
-						x1: this.resolveFullImagePath(movie.poster_path, ImageQuality.LOW),
-						x2: this.resolveFullImagePath(movie.poster_path, ImageQuality.LOW)
-					},
-					{
-						size: 'md',
-						x1: this.resolveFullImagePath(movie.poster_path, ImageQuality.MEDIUM),
-						x2: this.resolveFullImagePath(movie.poster_path, ImageQuality.MEDIUM)
-					},
-					{
-						size: 'lg',
-						x1: this.resolveFullImagePath(movie.poster_path, ImageQuality.HIGH),
-						x2: this.resolveFullImagePath(movie.poster_path, ImageQuality.HIGH)
-					}
-				]
+				images: prepareResponsiveImages(movie)
 			};
 		});
 	}
@@ -63,7 +50,7 @@ export class MovieDetailComponent implements OnInit {
 		return resolveFullImagePath(movieImageUrl, imageQuality);
 	}
 
-	backButtonSelected() {
+	goBack() {
 		this.location.back();
 	}
 }

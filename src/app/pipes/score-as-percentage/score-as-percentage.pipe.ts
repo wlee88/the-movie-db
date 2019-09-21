@@ -20,6 +20,7 @@ export class ScoreAsPercentagePipe implements PipeTransform {
 		if (isNaN(score)) {
 			return '0%';
 		}
+
 		return `${score * 10}%`;
 	}
 }

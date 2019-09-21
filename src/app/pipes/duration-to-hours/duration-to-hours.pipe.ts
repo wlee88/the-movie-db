@@ -12,6 +12,7 @@ import { Time } from '../../contracts/time';
 export class DurationToHoursPipe implements PipeTransform {
 	transform(minutes: number): string {
 		const time = this.convert(minutes);
+
 		return `${time.hours}h ${time.minutes}min`;
 	}
 

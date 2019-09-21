@@ -92,7 +92,7 @@ describe('MovieDetailComponent', () => {
 		describe('and when the back button is pressed', () => {
 			beforeEach(() => {
 				spyOn(location, 'back');
-				sut.backButtonSelected();
+				sut.goBack();
 			});
 			it('should call location.back', () => {
 				expect(location.back).toHaveBeenCalledTimes(1);

@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+
 import { SearchBarForm } from '../../contracts/search-bar-form';
 
 const DEFAULT_DELAY_EMIT_IN_MS = 500;

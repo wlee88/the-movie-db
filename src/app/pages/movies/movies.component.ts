@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Movies } from '../../contracts';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter, flatMap, map } from 'rxjs/operators';
-import { SearchBarForm } from '../../contracts/search-bar-form';
+
+import { Movies } from '../../contracts';
 import { MoviesService, StoreService } from '../../services';
+import { SearchBarForm } from '../../contracts/search-bar-form';
 
 @Component({
 	selector: 'movies',

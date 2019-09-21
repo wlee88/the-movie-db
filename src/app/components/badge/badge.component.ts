@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-// TODO: move to const file?
 const HIGH_USER_SCORE_BADGE_CSS_CLASS = 'badge--high';
 const AVERAGE_USER_SCORE_BADGE_CSS_CLASS = 'badge--average';
 const LOW_USER_SCORE_BADGE_CSS_CLASS = 'badge--low';
+
 @Component({
 	selector: 'badge',
 	templateUrl: './badge.component.html',
@@ -26,6 +26,7 @@ export class BadgeComponent {
 		if (this.voteAverage < 5) {
 			return LOW_USER_SCORE_BADGE_CSS_CLASS;
 		}
+
 		return '';
 	}
 }
