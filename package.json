@@ -5,9 +5,11 @@
 		"ng": "ng",
 		"start": "npm run generate-environment-file && ng serve",
 		"build": "npm run generate-environment-file && ng build",
-		"test": "ng test",
+		"test": "npm run generate-environment-file && ng test",
 		"lint": "npm run prettier && npm run tslint",
-		"generate-environment-file": "ts-node generate-environment-file.ts"
+		"generate-environment-file": "ts-node generate-environment-file.ts",
+		"prettier": "prettier --config .prettierrc --write \"{*,src/**/*}.+(ts|js|md|html)\"",
+		"tslint": "tslint --format stylish --fix --project tsconfig.json"
 	},
 	"private": true,
 	"dependencies": {
