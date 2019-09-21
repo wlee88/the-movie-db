@@ -1,6 +1,14 @@
 # TheMovieDb
 
-You can see a live preview [here](http://the-movie-db.william-lee.com).
+You can see a live preview at [http://the-movie-db.william-lee.com](http://the-movie-db.william-lee.com).
+
+### Home Page
+
+<img width="300" alt="Screenshot 2019-09-21 at 3 10 27 pm" src="https://user-images.githubusercontent.com/631540/65368265-3a17ac80-dc82-11e9-8e23-b81aef64daf5.png">
+
+### Movie Details Page
+
+<img width="300" alt="Screenshot 2019-09-21 at 3 10 36 pm" src="https://user-images.githubusercontent.com/631540/65368266-3a17ac80-dc82-11e9-8146-b63e4e30a58e.png">
 
 ## Getting up and running
 
