@@ -29,11 +29,15 @@ export class MoviesComponent implements OnInit {
 		this.movies$ = merge(
 			this.refreshSubject$.pipe(flatMap(_ => this.getMostPopularMovies())),
 			this.getMostPopularMovies(),
-			this.storedSearchValue$.pipe(
-				filter(value => !!value),
-				flatMap(searchText =>
-					this.moviesService.searchMovies(searchText).pipe(map(moviesListResponse => moviesListResponse.results))
-				)
+			this.retrieveMoviesFromSearchTerm()
+		);
+	}
+
+	private retrieveMoviesFromSearchTerm() {
+		return this.storedSearchValue$.pipe(
+			filter(value => !!value),
+			flatMap(searchText =>
+				this.moviesService.searchMovies(searchText).pipe(map(moviesListResponse => moviesListResponse.results))
 			)
 		);
 	}
@@ -73,7 +77,15 @@ export class MoviesComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * This will only emit/retrieve the most popular movies
+	 * if there is no store value.
+	 */
 	private getMostPopularMovies(): Observable<Movies> {
-		return this.moviesService.getMostPopular().pipe(map(moviesListResponse => moviesListResponse.results));
+		const storeHasValue = this.storeService.getValue();
+		return this.moviesService.getMostPopular().pipe(
+			filter(_ => !storeHasValue),
+			map(moviesListResponse => moviesListResponse.results)
+		);
 	}
 }

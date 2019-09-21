@@ -2,13 +2,7 @@
 
 You can see a live preview at [http://the-movie-db.william-lee.com](http://the-movie-db.william-lee.com).
 
-### Home Page
-
-<img width="300" alt="Screenshot 2019-09-21 at 3 10 27 pm" src="https://user-images.githubusercontent.com/631540/65368265-3a17ac80-dc82-11e9-8e23-b81aef64daf5.png">
-
-### Movie Details Page
-
-<img width="300" alt="Screenshot 2019-09-21 at 3 10 36 pm" src="https://user-images.githubusercontent.com/631540/65368266-3a17ac80-dc82-11e9-8146-b63e4e30a58e.png">
+<img src="https://user-images.githubusercontent.com/631540/65369745-60dede80-dc94-11e9-94c1-1185ea32bcb8.gif" width="500">
 
 ## Getting up and running
 
@@ -54,7 +48,9 @@ and also `PRODUCTION` variables are set in the environment.
 ## Time constraints
 
 - Testing of smaller components was omitted - so no test coverage for them as of now.
-- No error handling.. should've catered for if there is an API or network issue when retrieving the data.
+- Would have fixed a bug where the user can click the search bar twice and it will go to the top of the
+  page again - it's quite annoying.
+- No error handling on network issues - it doesn't handle these gracefully.
 
 ## Room for improvement
 
@@ -74,6 +70,7 @@ and also `PRODUCTION` variables are set in the environment.
 - The back button is transparent when the poster is white. It'd be nice
   to make a smart back button which is aware of the color and can display
   the inverse of the background color average.
+- Would be nice if the app scrolled to the search bar when you click back when viewing a movie.
 
 ## Code scaffolding
 
@@ -85,5 +82,7 @@ Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
 
 ## Tested on
 
-- Galaxy Sz8
-- Pixel
+- Galaxy S8 (chrome)
+- Pixel (chrome)
+- Ipad mini (safari)
+- Desktop (Firefox/Chrome)
