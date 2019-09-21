@@ -54,6 +54,7 @@ and also `PRODUCTION` variables are set in the environment.
 ## Time constraints
 
 - Testing of smaller components was omitted - so no test coverage for them as of now.
+- No error handling.. should've catered for if there is an API or network issue when retrieving the data.
 
 ## Room for improvement
 
