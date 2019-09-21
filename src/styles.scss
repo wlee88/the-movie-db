@@ -22,6 +22,7 @@ h5,
 h6 {
 	font-family: $secondaryFont;
 	color: $headingColor;
+	font-weight: bolder;
 }
 
 hr {
@@ -51,5 +52,17 @@ sn-image-loader {
 		width: 100%;
 		border-radius: 10px;
 		box-shadow: $boxShadow;
+		min-height: 100px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-size: 1.5rem;
 	}
 }

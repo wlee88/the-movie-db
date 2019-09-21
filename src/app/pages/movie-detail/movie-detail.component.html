@@ -6,15 +6,15 @@
 	></header-overlay>
 	<div class="container">
 		<div class="row movie-detail__heading-summary">
-			<div class="col-5 col-lg-2 movie-detail__image">
+			<div class="col-4 col-lg-2 movie-detail__image">
 				<sn-image-loader
 					[image]="image"
 					[sizes]="sizes"
-					imgClass="w-100 h-100"
+					imgClass="w-100"
 					alt="Cover art for {{ movie.title }}"
 				></sn-image-loader>
 			</div>
-			<div class="col-7 col-lg-10 movie-detail__title-with-description">
+			<div class="col-8 col-lg-10 col-sm-8 movie-detail__title-with-description">
 				<div class="movie-detail__title">
 					<h1>{{ movie.title }}</h1>
 				</div>
@@ -24,7 +24,7 @@
 					<span class="movie-detail__user-score">{{ movie.vote_average | scoreAsPercentage }} User Score</span>
 				</div>
 				<div class="movie-detail__duration">
-					{{ movie.runtime | durationToHours }}
+					<span>{{ movie.runtime | durationToHours }}</span>
 				</div>
 			</div>
 		</div>
@@ -34,7 +34,3 @@
 		</article>
 	</div>
 </section>
-
-<ng-template #loading>
-	<loading></loading>
-</ng-template>

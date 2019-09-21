@@ -43,11 +43,13 @@ and also `PRODUCTION` variables are set in the environment.
   on the device screen size with image loading placeholder. Also loads
   images on scroll.
 - Fallback missing images for those photos without photos.
+- Handles empty results.
 - Behaviour subject store for keeping track of the user search time -
   this persists history when the user clicks a movie.
 - Scrolls to the search bar when you press it for an improved mobile experience.
+- Theme color on chrome android.
 - A 404 page.
-- CI/CD pipeline for quick and easy deployment straight to S3.
+- CI/CD pipeline for quick and easy deployment straight to AWS S3.
 
 ## Time constraints
 
@@ -79,3 +81,8 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
+
+## Tested on
+
+- Galaxy Sz8
+- Pixel
