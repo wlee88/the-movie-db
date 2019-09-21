@@ -6,13 +6,13 @@
 	bottom: 0;
 	right: 0;
 	left: 0;
+	transition: 0.5s;
+	overflow-y: hidden;
+	overflow-x: hidden;
 	background-color: $backgroundColor;
 
 	&__content {
 		background-color: $backgroundColor;
-		width: 2rem;
-		height: 2rem;
-		margin: auto;
 		&-text {
 			font-size: 2rem;
 		}
