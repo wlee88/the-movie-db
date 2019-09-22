@@ -79,11 +79,9 @@ and also `PRODUCTION` variables are set in the environment.
   a movie (i.e presses enter) - I think this easily rectified by blurriing the search input.
 - Currently API calls to retrieve movies are cached. It'd be great to have
   a background worker checking if this data is stale - and notify the user to
-  refresh / re-retrieve the data. I believe this would create a better UX experience
-- the reason being that the user may not understand what is going on, may perceive the the auto refresh as a glitch
+  refresh / re-retrieve the data. I believe this would create a better UX experience - the reason being that the user may not understand what is going on, may perceive the the auto refresh as a glitch
   and we will lose user's trust in our interface.
-- Would be great to remember where the user's position was when they clicked a moved and
-  reload/retrieve from cache the infinite scroll results so that the user can go back to that very position.
+- Would be great to remember where the user's position was when they clicked a movie and then went back.
 - Progressive image loading for the header.
 
 ## Code scaffolding
