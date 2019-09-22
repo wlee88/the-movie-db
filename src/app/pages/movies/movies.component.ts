@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject, Subscription } from 'rxjs';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner';
-import { filter, flatMap, map, tap } from 'rxjs/operators';
+import { filter, flatMap, map, switchMap, tap } from 'rxjs/operators';
 
 import { Movies } from '../../contracts';
 import { MoviesService, StoreService } from '../../services';
@@ -36,10 +36,10 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		 * - When any of the observables has completed and emitted we set `isFetchingData` to false.
 		 */
 		this.movies$ = merge(
-			this.getMostPopularMovies(1), // Will not emit if there is a search value in the store.
+			this.getMostPopularMovies(), // Will not emit if there is a search value in the store.
 			this.retrieveMoviesFromSearchTerm(1), // Will only emit if there is a search value in the store.
-			this.refreshSearchResults$.pipe(flatMap(() => this.retrieveMoviesFromSearchTerm())),
-			this.refreshPopularMovies$.pipe(flatMap(() => this.getMostPopularMovies()))
+			this.refreshSearchResults$.pipe(switchMap(() => this.retrieveMoviesFromSearchTerm())),
+			this.refreshPopularMovies$.pipe(switchMap(() => this.getMostPopularMovies()))
 		).pipe(tap(() => (this.isFetchingData = false)));
 
 		const updateMoviesCacheSubscription = this.movies$.subscribe(movies => {
@@ -102,15 +102,12 @@ export class MoviesComponent implements OnInit, OnDestroy {
 	 * if there is no store value.
 	 * @param pageNumber of results to retrieve.
 	 */
-	private getMostPopularMovies(pageNumber?: number): Observable<Movies> {
-		if (pageNumber) {
-			pageNumber = this.currentPageNumber$.getValue();
-		}
+	private getMostPopularMovies(): Observable<Movies> {
 		this.isFetchingData = true;
 		const storeHasValue = this.storeService.getValue();
 
-		return this.moviesService.getMostPopular(pageNumber).pipe(
-			filter(_ => !storeHasValue),
+		return this.moviesService.getMostPopular(this.currentPageNumber$.getValue()).pipe(
+			filter(() => !storeHasValue),
 			map(moviesListResponse => moviesListResponse.results)
 		);
 	}
@@ -119,7 +116,8 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		this.moviesCache = [];
 	}
 
-	private retrieveMoviesFromSearchTerm(pageNumber?: number) {
+	private retrieveMoviesFromSearchTerm(pageNumberToFetch?: number) {
+		let pageNumber = pageNumberToFetch;
 		if (!pageNumber) {
 			pageNumber = this.currentPageNumber$.getValue();
 		}

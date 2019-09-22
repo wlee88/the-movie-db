@@ -75,7 +75,7 @@ and also `PRODUCTION` variables are set in the environment.
   to make a smart back button which is aware of the color and can display
   the inverse of the background color average.
 - Would be nice if the app scrolled to the search bar when you click back when viewing a movie.
-- Would be great to hide the keyboard when the user finishes searching for
+- Hide the keyboard when the user finishes searching for
   a movie (i.e presses enter) - I think this easily rectified by blurriing the search input.
 - Currently API calls to retrieve movies are cached. It'd be great to have
   a background worker checking if this data is stale - and notify the user to
@@ -84,6 +84,7 @@ and also `PRODUCTION` variables are set in the environment.
   and we will lose user's trust in our interface.
 - Would be great to remember where the user's position was when they clicked a moved and
   reload/retrieve from cache the infinite scroll results so that the user can go back to that very position.
+- Progressive image loading for the header.
 
 ## Code scaffolding
 
