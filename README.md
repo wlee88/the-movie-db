@@ -39,8 +39,8 @@ and also `PRODUCTION` variables are set in the environment.
 - Infinite scroll - loads new data when the user reaches the bottom of the page - with loading state.
 - Fallback missing images for those photos without photos.
 - Handles empty results.
-- Behaviour subject store for keeping track of the user search time -
-  this persists history when the user clicks a movie.
+- Behaviour subject observable store for keeping track of the user search query -
+  this persists history when the user clicks a movie and clicks back.
 - Theme color on chrome android.
 - Clickable icon to go back to the homepage.
 - A 404 page.
@@ -49,12 +49,9 @@ and also `PRODUCTION` variables are set in the environment.
 ## Time constraints
 
 - Testing of smaller components was omitted - so no test coverage for them as of now.
-- I didn't have time to unit test the infinite scroll and loading states in movies component
-  as I added these in a rush at the end for fun..
-- Would have fixed a bug where the user can click the search bar twice and it will go to the top of the
-  page again - it's quite annoying.
+- I didn't have time to unit test the infinite scroll related functionality and loading states in movies component
+  as I added these in a rush at the end for fun.
 - No error handling on network issues - it doesn't handle these gracefully.
-- Would have liked to add a loading overlay when fetching new movies during infinite scroll.
 
 ## Room for improvement
 
@@ -63,12 +60,12 @@ and also `PRODUCTION` variables are set in the environment.
   They could have been refined much better for a better user experience.
 - API key is in the url could be done via a proxy server which has the key instead.
   There would be no need for the http interceptor and one less environment variable for this repo to care about.
-- Server side rendering - For better performance and SEO as static page, less load on client so better support on all mobiles / devices
-- Could've broken down components small for better reusability.
-- Enable Typescript incremental builds when this is supported - https://github.com/angular/angular-cli/issues/13941)
-- Could have made the durationToHours pipe more flexible - it's not flexible on formatting at all.
+- Server side rendering - For better performance and SEO as static page, less load on client so better support on all mobiles / devices.
+- Could've broken down components small for better re-usability.
+- Enable Typescript incremental builds when this is supported for faster build times - https://github.com/angular/angular-cli/issues/13941)
+- Could have made the `durationToHours` pipe more flexible - it's not flexible on formatting at all.
 - Could have used `rem` as opposed to `px`. It's much more maintainable and sustainable to use `rem`.
-- Path name mapping (i.e introduction of named module) for cleaner imports.
+- Path name mapping (i.e introduction of named modules) for cleaner imports.
 - In hindsight I shouldn't have made `PRODUCTION` a necessary environment.
   This should have been a flag that is generated via `build:production`
 - The back button is transparent when the poster is white. It'd be nice
@@ -76,10 +73,11 @@ and also `PRODUCTION` variables are set in the environment.
   the inverse of the background color average.
 - Would be nice if the app scrolled to the search bar when you click back when viewing a movie.
 - Hide the keyboard when the user finishes searching for
-  a movie (i.e presses enter) - I think this easily rectified by blurriing the search input.
+  a movie (i.e presses enter or if the search results are loaded) - I think this is easily rectified by blurring the search input.
 - Currently API calls to retrieve movies are cached. It'd be great to have
-  a background worker checking if this data is stale - and notify the user to
-  refresh / re-retrieve the data. I believe this would create a better UX experience - the reason being that the user may not understand what is going on, may perceive the the auto refresh as a glitch
+  a background worker/process checking if the current data is stale - and notifies the user to
+  refresh / re-retrieve the data. I believe this would create a better UX experience than refreshing the data on the user's behalf -
+  the reason being that the user may not understand what is going on, may perceive the the auto refresh as a glitch
   and we will lose user's trust in our interface.
 - Would be great to remember where the user's position was when they clicked a movie and then went back.
 - Progressive image loading for the header.
