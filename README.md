@@ -58,8 +58,6 @@ and also `PRODUCTION` variables are set in the environment.
 
 ## Room for improvement
 
-- Known issue where if you scroll down on the popular movies page, and then do a search, it will search
-  for the wrong page of data (i.e the old state) - the observable architecture needs some rejigging for this.
 - Could be a progressive web app for a faster app like experience and offline functionality.
 - Those fallback images and loading images are courtesy of [placeholder.com](placeholder.com).
   They could have been refined much better for a better user experience.
@@ -84,8 +82,8 @@ and also `PRODUCTION` variables are set in the environment.
   refresh / re-retrieve the data. I believe this would create a better UX experience
 - the reason being that the user may not understand what is going on, may perceive the the auto refresh as a glitch
   and we will lose user's trust in our interface.
-- Would be great to remember where the user's position was, and cache all of the infinite scroll results
-  so that the user can go back to that very position.
+- Would be great to remember where the user's position was when they clicked a moved and
+  reload/retrieve from cache the infinite scroll results so that the user can go back to that very position.
 
 ## Code scaffolding
 

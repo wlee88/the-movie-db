@@ -36,9 +36,9 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		 * - When any of the observables has completed and emitted we set `isFetchingData` to false.
 		 */
 		this.movies$ = merge(
-			this.getMostPopularMovies(),
-			this.retrieveMoviesFromSearchTerm(),
-			this.refreshSearchResults$.pipe(flatMap(_ => this.retrieveMoviesFromSearchTerm())),
+			this.getMostPopularMovies(1), // Will not emit if there is a search value in the store.
+			this.retrieveMoviesFromSearchTerm(1), // Will only emit if there is a search value in the store.
+			this.refreshSearchResults$.pipe(flatMap(() => this.retrieveMoviesFromSearchTerm())),
 			this.refreshPopularMovies$.pipe(flatMap(() => this.getMostPopularMovies()))
 		).pipe(tap(() => (this.isFetchingData = false)));
 
@@ -46,19 +46,21 @@ export class MoviesComponent implements OnInit, OnDestroy {
 			this.moviesCache = this.moviesCache.concat(movies);
 		});
 
-		// The search value changed - so we need to reset the movies cache and the page number.
+		// The search value changed - so we need to reset the movies cache and the page number back to 1.
 		const storedSearchValueSubscription = this.storedSearchValue$.subscribe(() => {
 			this.isFetchingData = true;
 			this.currentPageNumber$.next(1);
 			this.resetMoviesCache();
 		});
 
+		// Fetch the next set of results by calling the relevant refresh observable as the page number has changed.
 		const currentPageNumberSubscription = this.currentPageNumber$
 			.pipe(filter(pageNumber => pageNumber > 1))
 			.subscribe(() => {
 				this.emitRefresh();
 			});
 
+		// Keep track of the subscriptions so we may unsubscribe to them on ngOnDestroy lifecycle hook.
 		this.subscriptions.push(
 			updateMoviesCacheSubscription,
 			storedSearchValueSubscription,
@@ -82,6 +84,9 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		return !!this.storeService.getValue();
 	}
 
+	/**
+	 * When the user reaches the bottom of the page, update the current page number.
+	 */
 	@HostListener('window:scroll', ['$event'])
 	incrementCurrentPageNumber() {
 		// Scroll to bottom behaviour on mac has quirks - @see https://stackoverflow.com/a/40370876
@@ -95,12 +100,16 @@ export class MoviesComponent implements OnInit, OnDestroy {
 	/**
 	 * This will only emit/retrieve the most popular movies
 	 * if there is no store value.
+	 * @param pageNumber of results to retrieve.
 	 */
-	private getMostPopularMovies(): Observable<Movies> {
+	private getMostPopularMovies(pageNumber?: number): Observable<Movies> {
+		if (pageNumber) {
+			pageNumber = this.currentPageNumber$.getValue();
+		}
 		this.isFetchingData = true;
 		const storeHasValue = this.storeService.getValue();
 
-		return this.moviesService.getMostPopular(this.currentPageNumber$.getValue()).pipe(
+		return this.moviesService.getMostPopular(pageNumber).pipe(
 			filter(_ => !storeHasValue),
 			map(moviesListResponse => moviesListResponse.results)
 		);
@@ -110,14 +119,17 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		this.moviesCache = [];
 	}
 
-	private retrieveMoviesFromSearchTerm() {
+	private retrieveMoviesFromSearchTerm(pageNumber?: number) {
+		if (!pageNumber) {
+			pageNumber = this.currentPageNumber$.getValue();
+		}
 		this.isFetchingData = true;
 
 		return this.storedSearchValue$.pipe(
 			filter(value => !!value),
 			flatMap(searchText =>
 				this.moviesService
-					.searchMovies(searchText, this.currentPageNumber$.getValue())
+					.searchMovies(searchText, pageNumber)
 					.pipe(map(moviesListResponse => moviesListResponse.results))
 			)
 		);
