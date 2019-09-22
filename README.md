@@ -34,8 +34,9 @@ and also `PRODUCTION` variables are set in the environment.
 
 - Progressive image loading - Shows an interim loading image and
   then loads an appropriate image poster of varying quality depending
-  on the device screen size with image loading placeholder. Also loads
-  images on scroll.
+  on the device screen size with image loading placeholder. Also will only fetch
+  images when the image is in the viewport for improved performance.
+- Infinite scroll - loads new data when the user reaches the bottom of the page - with loading state.
 - Fallback missing images for those photos without photos.
 - Handles empty results.
 - Behaviour subject store for keeping track of the user search time -
@@ -48,6 +49,8 @@ and also `PRODUCTION` variables are set in the environment.
 ## Time constraints
 
 - Testing of smaller components was omitted - so no test coverage for them as of now.
+- I didn't have time to unit test the infinite scroll and loading states in movies component
+  as I added these in a rush at the end for fun..
 - Would have fixed a bug where the user can click the search bar twice and it will go to the top of the
   page again - it's quite annoying.
 - No error handling on network issues - it doesn't handle these gracefully.
@@ -55,16 +58,18 @@ and also `PRODUCTION` variables are set in the environment.
 
 ## Room for improvement
 
-- Could be a progressive web app so it works offline, and faster app like experience
+- Known issue where if you scroll down on the popular movies page, and then do a search, it will search
+  for the wrong page of data (i.e the old state) - the observable architecture needs some rejigging for this.
+- Could be a progressive web app for a faster app like experience and offline functionality.
 - Those fallback images and loading images are courtesy of [placeholder.com](placeholder.com).
   They could have been refined much better for a better user experience.
-- API key is in the url could be done via a proxy server which has the key instead. No need for http interceptor and webpack Injection for key
+- API key is in the url could be done via a proxy server which has the key instead.
+  There would be no need for the http interceptor and one less environment variable for this repo to care about.
 - Server side rendering - For better performance and SEO as static page, less load on client so better support on all mobiles / devices
 - Could've broken down components small for better reusability.
 - Enable Typescript incremental builds when this is supported - https://github.com/angular/angular-cli/issues/13941)
 - Could have made the durationToHours pipe more flexible - it's not flexible on formatting at all.
-- Could have reduced the rem of the fonts on mobile.
-- `px` to `rem`. it's much more maintainable and sustainable to use `rem`.
+- Could have used `rem` as opposed to `px`. It's much more maintainable and sustainable to use `rem`.
 - Path name mapping (i.e introduction of named module) for cleaner imports.
 - In hindsight I shouldn't have made `PRODUCTION` a necessary environment.
   This should have been a flag that is generated via `build:production`
@@ -73,12 +78,11 @@ and also `PRODUCTION` variables are set in the environment.
   the inverse of the background color average.
 - Would be nice if the app scrolled to the search bar when you click back when viewing a movie.
 - Would be great to hide the keyboard when the user finishes searching for
-  a movie (i.e either clicks away or presses enter).
+  a movie (i.e presses enter) - I think this easily rectified by blurriing the search input.
 - Currently API calls to retrieve movies are cached. It'd be great to have
   a background worker checking if this data is stale - and notify the user to
-  refresh. In my opinion this would create a better UX experience over simply
-  overriding stale data without asking the user - the reason being that the user
-  won't understand what is going on, may perceive the the auto refresh as a glitch
+  refresh / re-retrieve the data. I believe this would create a better UX experience
+- the reason being that the user may not understand what is going on, may perceive the the auto refresh as a glitch
   and we will lose user's trust in our interface.
 - Would be great to remember where the user's position was, and cache all of the infinite scroll results
   so that the user can go back to that very position.

@@ -6,14 +6,19 @@
 		<h2 *ngIf="!existsSearchValue">Popular Movies</h2>
 	</section>
 
-	<div class="movies__items row" *ngIf="movies$ | async; else loading">
-		<article class="movies__items-empty" *ngIf="moviesCache.length === 0">
+	<section class="movies__items" *ngIf="movies$ | async; else loading">
+		<div class="row">
+			<article class="col-md-3 col-6" *ngFor="let movie of moviesCache">
+				<movie-item [movie]="movie" [routerLink]="[movie.id]"></movie-item>
+			</article>
+		</div>
+		<article class="movies__items-empty" *ngIf="!isFetchingData && this.moviesCache.length === 0">
 			<h3>No results found for: {{ storedSearchValue$ | async }}</h3>
 		</article>
-		<article class="col-md-3 col-6" *ngFor="let movie of moviesCache">
-			<movie-item [movie]="movie" [routerLink]="[movie.id]"></movie-item>
-		</article>
-	</div>
+		<div class="text-uppercase text-center movies__items-loader" *ngIf="isFetchingData">
+			<h3><fa-icon [icon]="faSpinner" [pulse]="true"></fa-icon> Fetching Movies...</h3>
+		</div>
+	</section>
 </div>
 
 <ng-template #loading>

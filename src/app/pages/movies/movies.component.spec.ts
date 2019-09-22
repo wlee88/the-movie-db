@@ -68,9 +68,10 @@ describe('MoviesComponent', () => {
 				fixture.detectChanges();
 			});
 
-			describe('and the results set is empty', () => {
+			describe('and the results set is empty and data is not being fetched', () => {
 				beforeEach(() => {
 					sut.movies$ = of([]);
+					sut.isFetchingData = false;
 					fixture.detectChanges();
 				});
 

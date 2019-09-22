@@ -7,5 +7,8 @@ $movieItemsPaddingTop: 20px;
 	}
 	&__items {
 		padding-top: $movieItemsPaddingTop;
+		&-loader {
+			padding: 20px 0;
+		}
 	}
 }
