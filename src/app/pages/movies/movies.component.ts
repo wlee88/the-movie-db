@@ -18,6 +18,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
 	currentSearchTerm: string;
 	faSpinner = faSpinner;
 	isFetchingData = false;
+	shouldShowEndOfResults = false;
 	movies$: Observable<Movies>;
 	moviesCache: Movies = [];
 	refreshPopularMovies$: Subject<void> = new Subject<void>();
@@ -44,11 +45,16 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		).pipe(tap(() => (this.isFetchingData = false)));
 
 		const updateMoviesCacheSubscription = this.movies$.subscribe(movies => {
-			this.moviesCache = this.moviesCache.concat(movies);
+			if (this.checkHasReachedEndOfResults(movies)) {
+				this.shouldShowEndOfResults = true;
+			} else {
+				this.moviesCache = this.moviesCache.concat(movies);
+			}
 		});
 
 		// The search value changed - so we need to reset the movies cache and the page number back to 1.
 		const storedSearchValueSubscription = this.storedSearchValue$.subscribe(() => {
+			this.shouldShowEndOfResults = false;
 			this.isFetchingData = true;
 			this.currentPageNumber$.next(1);
 			this.resetMoviesCache();
@@ -63,25 +69,20 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
 		// Show loading bar but buffer the amount of times increment page number is triggered.
 		const windowScrollSubscription = fromEvent(window, 'scroll')
-			.pipe(tap(() => (this.isFetchingData = true)))
+			.pipe(
+				filter(() => !this.shouldShowEndOfResults),
+				tap(() => (this.isFetchingData = true))
+			)
 			.pipe(debounceTime(WINDOW_SCROLL_DEBOUNCE_TIME_IN_MS))
 			.subscribe(() => this.incrementCurrentPageNumber());
 
 		// Keep track of the subscriptions so we may unsubscribe to them on ngOnDestroy lifecycle hook.
 		this.subscriptions.push(
-			updateMoviesCacheSubscription,
-			storedSearchValueSubscription,
 			currentPageNumberSubscription,
+			storedSearchValueSubscription,
+			updateMoviesCacheSubscription,
 			windowScrollSubscription
 		);
-	}
-
-	private emitRefresh() {
-		if (this.storeService.getValue()) {
-			this.refreshSearchResults$.next();
-		} else {
-			this.refreshPopularMovies$.next();
-		}
 	}
 
 	ngOnDestroy() {
@@ -92,16 +93,19 @@ export class MoviesComponent implements OnInit, OnDestroy {
 		return !!this.storeService.getValue();
 	}
 
+	private checkHasReachedEndOfResults(movies) {
+		return this.moviesCache.length > 0 && movies.length === 0;
+	}
+
 	/**
-	 * When the user reaches the bottom of the page, update the current page number.
+	 * If there is a store value, get the search results using the store value
+	 * Else show the most popular movies.
 	 */
-	incrementCurrentPageNumber() {
-		this.isFetchingData = true;
-		// Scroll to bottom behaviour on mac has quirks - @see https://stackoverflow.com/a/40370876
-		const userScrollToBottomOfThePage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
-		if (userScrollToBottomOfThePage) {
-			const currentPageNumber = this.currentPageNumber$.getValue();
-			this.currentPageNumber$.next(currentPageNumber + 1);
+	private emitRefresh() {
+		if (this.storeService.getValue()) {
+			this.refreshSearchResults$.next();
+		} else {
+			this.refreshPopularMovies$.next();
 		}
 	}
 
@@ -118,6 +122,19 @@ export class MoviesComponent implements OnInit, OnDestroy {
 			filter(() => !storeHasValue),
 			map(moviesListResponse => moviesListResponse.results)
 		);
+	}
+
+	/**
+	 * When the user reaches the bottom of the page, update the current page number.
+	 */
+	private incrementCurrentPageNumber() {
+		this.isFetchingData = true;
+		// Scroll to bottom behaviour on mac has quirks - @see https://stackoverflow.com/a/40370876
+		const userScrollToBottomOfThePage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
+		if (userScrollToBottomOfThePage) {
+			const currentPageNumber = this.currentPageNumber$.getValue();
+			this.currentPageNumber$.next(currentPageNumber + 1);
+		}
 	}
 
 	private resetMoviesCache() {
@@ -145,7 +162,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
 	 * A search has been made so search for movies that match the term.
 	 * @param searchBarFormChange the form change object emitted from search-bar.
 	 */
-	searchAndUpdateMovies(searchBarFormChange: SearchBarForm) {
+	private searchAndUpdateMovies(searchBarFormChange: SearchBarForm) {
 		const { searchText } = searchBarFormChange;
 		this.currentSearchTerm = searchText;
 		this.storeService.setValue(searchText);

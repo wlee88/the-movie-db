@@ -15,8 +15,11 @@
 		<article class="movies__items-empty" *ngIf="!isFetchingData && this.moviesCache.length === 0">
 			<h3>No results found for: {{ storedSearchValue$ | async }}</h3>
 		</article>
-		<div class="text-uppercase text-center movies__items-loader" *ngIf="isFetchingData">
+		<div class="text-uppercase text-center movies__items-loader" *ngIf="isFetchingData && !shouldShowEndOfResults">
 			<h3><fa-icon [icon]="faSpinner" [pulse]="true"></fa-icon> Fetching Movies...</h3>
+		</div>
+		<div class="text-uppercase text-center movies__items-loader" *ngIf="shouldShowEndOfResults">
+			<h3>End Of Results</h3>
 		</div>
 	</section>
 </div>
@@ -24,8 +27,5 @@
 <ng-template #loading>
 	<div *ngIf="!existsSearchValue">
 		<loading></loading>
-	</div>
-	<div *ngIf="existsSearchValue">
-		Loading...
 	</div>
 </ng-template>

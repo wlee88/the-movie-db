@@ -81,6 +81,7 @@ and also `PRODUCTION` variables are set in the environment.
   and we will lose user's trust in our interface.
 - Would be great to remember where the user's position was when they clicked a movie and then went back.
 - Progressive image loading for the header.
+- UX - search icon in `search-bar` should turn into a cross where you can dismiss the keyboard.
 
 ## Code scaffolding
 
