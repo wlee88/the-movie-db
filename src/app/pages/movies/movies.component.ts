@@ -1,12 +1,13 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, merge, Observable, Subject, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, fromEvent, merge, Observable, Subject, Subscription } from 'rxjs';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner';
-import { filter, flatMap, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, map, switchMap, tap } from 'rxjs/operators';
 
 import { Movies } from '../../contracts';
 import { MoviesService, StoreService } from '../../services';
 import { SearchBarForm } from '../../contracts/search-bar-form';
 
+const WINDOW_SCROLL_DEBOUNCE_TIME_IN_MS = 500;
 @Component({
 	selector: 'movies',
 	templateUrl: './movies.component.html',
@@ -60,11 +61,18 @@ export class MoviesComponent implements OnInit, OnDestroy {
 				this.emitRefresh();
 			});
 
+		// Show loading bar but buffer the amount of times increment page number is triggered.
+		const windowScrollSubscription = fromEvent(window, 'scroll')
+			.pipe(tap(() => (this.isFetchingData = true)))
+			.pipe(debounceTime(WINDOW_SCROLL_DEBOUNCE_TIME_IN_MS))
+			.subscribe(() => this.incrementCurrentPageNumber());
+
 		// Keep track of the subscriptions so we may unsubscribe to them on ngOnDestroy lifecycle hook.
 		this.subscriptions.push(
 			updateMoviesCacheSubscription,
 			storedSearchValueSubscription,
-			currentPageNumberSubscription
+			currentPageNumberSubscription,
+			windowScrollSubscription
 		);
 	}
 
@@ -87,8 +95,8 @@ export class MoviesComponent implements OnInit, OnDestroy {
 	/**
 	 * When the user reaches the bottom of the page, update the current page number.
 	 */
-	@HostListener('window:scroll', ['$event'])
 	incrementCurrentPageNumber() {
+		this.isFetchingData = true;
 		// Scroll to bottom behaviour on mac has quirks - @see https://stackoverflow.com/a/40370876
 		const userScrollToBottomOfThePage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
 		if (userScrollToBottomOfThePage) {
